@@ -1,4 +1,3 @@
-@ -1,309 +0,0 @@
  <!-- ======= Sidebar ======= -->
  <aside id="sidebar" class="sidebar">
 

@@ -1,4 +1,4 @@
-@ -1,37 +0,0 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
