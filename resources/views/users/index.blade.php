@@ -25,7 +25,7 @@
                 <td>{{ $user->mobile }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
-                <td>{{ $user->user_type ? 'Admin' : 'User' }}</td>
+                <td>{{ $user->user_type ? 'User' : 'Admin' }}</td>
                 <td>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
