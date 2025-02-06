@@ -16,13 +16,8 @@
       </a>
       <ul id="sellers" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{route('users.index')}}">
+          <a href="{{route('drivers.index')}}">
             <i class="bi bi-circle"></i><span>{{trans('lang.user_list')}}</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{route('users.create')}}">
-            <i class="bi bi-circle"></i><span>{{trans('lang.user_create')}}</span>
           </a>
         </li>
       </ul>
@@ -38,11 +33,6 @@
             <i class="bi bi-circle"></i><span>Company List</span>
           </a>
         </li>
-        <li>
-          <a href="{{route('companies.create')}}">
-            <i class="bi bi-circle"></i><span>Company Create</span>
-          </a>
-        </li>
       </ul>
     </li>
  
@@ -54,11 +44,6 @@
         <li>
           <a href="{{route('vehicles.index')}}">
             <i class="bi bi-circle"></i><span>Vehicle List</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{route('vehicles.create')}}">
-            <i class="bi bi-circle"></i><span>Vehicle Create</span>
           </a>
         </li>
       </ul>

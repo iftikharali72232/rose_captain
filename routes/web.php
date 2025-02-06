@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\FormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +38,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('companies', CompanyController::class);
 
     Route::resource('vehicles', VehicleController::class);
+
+    Route::get('/form', [FormController::class, 'create'])->name('form.create');
+    Route::post('/form', [FormController::class, 'store'])->name('form.store');
+
+    Route::get('/drivers', [FormController::class, 'drivers'])->name('drivers.index');
+    Route::get('/vehicles', [FormController::class, 'vehicles'])->name('vehicles.index');
+    Route::get('/companies', [FormController::class, 'companies'])->name('companies.index');
+    
 });
 
