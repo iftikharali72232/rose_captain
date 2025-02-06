@@ -4,15 +4,15 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link " href="{{route('home')}}">
+      <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'addBg' : '' }}" href="{{route('home')}}">
         <i class="bi bi-grid"></i>
         <span>{{trans('lang.dashboard')}}</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#sellers" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-sliders"></i><span>{{trans('lang.users')}}</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed {{ Route::currentRouteName() == 'drivers.index' ? 'addBg' : '' }}" data-bs-target="#sellers" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-sliders"></i><span>{{trans('lang.users')}}</span><i class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
       </a>
       <ul id="sellers" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
@@ -24,8 +24,8 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#company" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-sliders"></i><span>Companies</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed {{ Route::currentRouteName() == 'companies.index' ? 'addBg' : '' }}" data-bs-target="#company" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-sliders"></i><span>Companies</span><i class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
       </a>
       <ul id="company" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
@@ -37,8 +37,8 @@
     </li>
  
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#vehicles" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-sliders"></i><span>Vehicles</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed {{ Route::currentRouteName() == 'vehicles.index' ? 'addBg' : '' }}" data-bs-target="#vehicles" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-sliders"></i><span>Vehicles</span><i class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
       </a>
       <ul id="vehicles" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>

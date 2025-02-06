@@ -4,9 +4,9 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{{route('home')}}" class="logo d-flex align-items-center">
         <img src="<?= asset("img/logo.png") ?>" alt="">
-        <span class="d-none d-lg-block">{{ trans('lang.labeey') }}{{Session::get('branch_id')}}</span>
+        <span class="d-none d-lg-block text-green">{{ trans('lang.labeey') }}{{Session::get('branch_id')}}</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn text-green"></i>
     </div><!-- End Logo -->
 <?php
 
@@ -20,8 +20,8 @@
       </form>
     </div><!-- End Search Bar -->
 
-    <a href="{{ url('lang/en') }}" class="mx-30px">English</a>
-        <a href="{{ url('lang/ar') }}">العربية</a>
+    <a href="{{ url('lang/en') }}" class="mx-30px {{ app()->getLocale() == 'en' ? 'text-green' : 'text-muted' }}">English</a>
+    <a href="{{ url('lang/ar') }}" class="{{ app()->getLocale() == 'ar' ? 'text-green' : 'text-muted' }}">العربية</a>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -32,9 +32,9 @@
         </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon text-white" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">{{count($new_users)}}</span>
+            <span class="badge bg-primary badge-number bg-success">{{count($new_users)}}</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu {{ app()->isLocale('ar') ? 'dropdown-menu-start' : 'dropdown-menu-end' }} dropdown-menu-arrow notifications">

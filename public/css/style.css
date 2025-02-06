@@ -1,13 +1,3 @@
-/**
-* Template Name: NiceAdmin - v2.5.0
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
 }
@@ -16,6 +6,25 @@ body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
+}
+
+.text-green {
+  color: #38ce3c !important;
+}
+
+.bg-gray {
+  background: #fafafa !important;
+}
+
+.custom-btn {
+  border: 1px solid #c3c3c3 !important;
+  color: #333350 !important;
+  background: #e8e8e8 !important;
+}
+
+.custom-btn:hover {
+  background: #333350 !important;
+  color: #e8e8e8 !important;
 }
 
 a {
@@ -399,7 +408,7 @@ h6 {
   z-index: 997;
   height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
+  background-color: #333350;
   padding-left: 20px;
   /* Toggle Sidebar Button */
   /* Search Bar */
@@ -628,7 +637,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
+  background-color: #333350;
 }
 
 @media (max-width: 1199px) {
@@ -702,22 +711,31 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: #899bbd;
   transition: 0.3;
-  background: #f6f9ff;
+  background: transparent;
   padding: 10px 15px;
   border-radius: 4px;
+}
+
+.addBg {
+  background: #f6f9ff1a !important;
+  color: #38ce3c !important;
+}
+
+.addBg i{
+  color: #38ce3c !important;
 }
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #899bbd;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
-  background: #fff;
+  color: #899bbd;
+  background: transparent;
 }
 
 .sidebar-nav .nav-link.collapsed i {
@@ -725,12 +743,12 @@ h6 {
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
-  background: #f6f9ff;
+  color: #38ce3c;
+  background: #f6f9ff1a;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #38ce3c;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -753,7 +771,7 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #899bbd;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -768,11 +786,11 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #38ce3c;
 }
 
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: #38ce3c;
 }
 
 /*--------------------------------------------------------------

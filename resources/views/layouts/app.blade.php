@@ -48,7 +48,7 @@
         @guest
 
         @else
-               <!-- Preloader -->
+          <!-- Preloader -->
           <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__wobble" src="{{asset('img/logo.png')}}" alt="AdminLTELogo" height="60" width="60">
           </div>
@@ -61,7 +61,7 @@
       @guest
       @yield('content')
         @else
-      <main id="main" class="main">
+        <main id="main" class="main">
             @yield('content')
         </main>
         @endguest
