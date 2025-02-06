@@ -18,7 +18,7 @@ class AuthController extends Controller
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'mobile' => 'required|string|exists:drivers,mobile',
+            'mobile' => 'required|string',
         ]);
 
         if ($validator->fails()) {
