@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Validate the request
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|string',
         ]);
@@ -29,7 +30,6 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Find the driver by mobile number
         $driver = Driver::where('mobile', $request->mobile)->first();
 
         if (!$driver) {
@@ -39,7 +39,78 @@ class AuthController extends Controller
             ], 404);
         }
 
-        // Generate a new token
+        // Generate OTP
+        $otp = mt_rand(1000, 9999);
+        $driver->otp = $otp;
+        $driver->otp_expires_at = now()->addMinutes(10);
+        $driver->save();
+
+        // Send SMS via Taqnyat
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . config('services.taqnyat.bearer_token'),
+                'Content-Type' => 'application/json',
+            ])->post(config('services.taqnyat.url'), [
+                        'sender' => config('services.taqnyat.sender'),
+                        'recipients' => [$driver->mobile],
+                        'body' => "Your OTP code is: $otp\nValid for 10 minutes"
+                    ]);
+
+            if (!$response->successful()) {
+                Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
+            }
+        } catch (\Exception $e) {
+            Log::info('Taqnyat URL', ['url' => config('services.taqnyat.url')]);
+            Log::error('SMS Send Error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP sent to your mobile number.',
+        ], 200);
+    }
+
+
+    public function verifyOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => 'required|string',
+            'otp' => 'required|string|digits:4',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid input.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $driver = Driver::where('mobile', $request->mobile)->first();
+
+        if (!$driver) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Driver not found.',
+            ], 404);
+        }
+
+        if ($driver->otp !== $request->otp || now()->gt($driver->otp_expires_at)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired OTP.',
+            ], 401);
+        }
+
+        // Clear OTP after successful verification
+        $driver->otp = null;
+        $driver->otp_expires_at = null;
+        $driver->save();
+
         $token = $driver->createToken('DriverAuthToken')->plainTextToken;
 
         return response()->json([
@@ -49,6 +120,7 @@ class AuthController extends Controller
             'driver' => $driver,
         ], 200);
     }
+
     public function logout(Request $request)
     {
         // Revoke the currently authenticated driver's token

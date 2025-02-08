@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'taqnyat' => [
+        'bearer_token' => env('TAQNYAT_BEARER_TOKEN'),
+        'sender' => env('TAQNYAT_SENDER'),
+        'url' => env('TAQNYAT_API_URL'),
+    ],
+
+
 ];

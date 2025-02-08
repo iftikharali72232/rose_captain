@@ -19,16 +19,18 @@ use App\Http\Controllers\Api\VehicleController;
 // public routes
 Route::post('/drivers', [DriverController::class, 'store']);
 Route::post('/driver/login', [AuthController::class, 'login']);
+Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
+
 // protected routes
-Route::group(["middleware"=> "auth:sanctum"], function () {
+Route::group(["middleware" => "auth:sanctum"], function () {
     // Requests
 
     Route::post('/driver/logout', [AuthController::class, 'logout']);
     Route::post('/driver/logout-all', [AuthController::class, 'logoutFromAllDevices']);
     Route::post('/driver/update-profile', [AuthController::class, 'updateProfile']);
 
-    Route::get('/driver/car', [VehicleController::class, 'show']); // Get car info
-    Route::post('/driver/car/update', [VehicleController::class, 'update']); // Update car info
+    Route::get('/driver/car', [VehicleController::class, 'show']);
+    Route::post('/driver/car/update', [VehicleController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
 
 });
