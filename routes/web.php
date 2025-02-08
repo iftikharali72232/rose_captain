@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/drivers', [FormController::class, 'drivers'])->name('drivers.index');
     Route::get('/vehicles', [FormController::class, 'vehicles'])->name('vehicles.index');
     Route::get('/companies', [FormController::class, 'companies'])->name('companies.index');
+    Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
+    Route::resource('wallet', WalletController::class);
     
 });
 

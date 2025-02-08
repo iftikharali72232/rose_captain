@@ -49,6 +49,18 @@
       </ul>
     </li>
     <li class="nav-item">
+      <a class="nav-link collapsed {{ Route::currentRouteName() == 'wallet.index' ? 'addBg' : '' }}" data-bs-target="#wallet" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-sliders"></i><span>Wallet</span><i class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
+      </a>
+      <ul id="wallet" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{route('wallet.index')}}">
+            <i class="bi bi-circle"></i><span>Wallet List</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('logout') }}"  onclick="event.preventDefault();
       document.getElementById('logout-form').submit();">
         <i class="bi bi-box-arrow-in-right"></i>

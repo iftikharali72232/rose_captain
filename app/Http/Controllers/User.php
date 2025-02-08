@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,15 @@ class User extends Controller
     public function create()
     {
         return view('users.create');
+    }
+    
+    public function updateStatus($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = $driver->status ? 0 : 1; // Toggle status between 0 and 1
+        $driver->save();
+
+        return redirect()->back()->with('success', 'Driver status updated successfully.');
     }
 
     // Store a newly created user in the database

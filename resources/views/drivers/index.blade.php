@@ -13,6 +13,8 @@
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>ID Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +24,20 @@
                     <td>{{ $driver->name }}</td>
                     <td>{{ $driver->mobile }}</td>
                     <td>{{ $driver->id_number }}</td>
+                    <td>
+                        <span class="badge {{ $driver->status ? 'bg-success' : 'bg-danger' }}">
+                            {{ $driver->status ? 'Approved' : 'Unapproved' }}
+                        </span>
+                    </td>
+                    <td>
+                        <form action="{{ route('drivers.update_status', $driver->id) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-sm {{ $driver->status ? 'btn-danger' : 'btn-success' }}">
+                                {{ $driver->status ? 'Unapprove' : 'Approve' }}
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

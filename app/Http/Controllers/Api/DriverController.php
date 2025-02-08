@@ -7,6 +7,7 @@ use App\Http\Requests\StoreFormRequest;
 use App\Models\Driver;
 use App\Models\Vehicle;
 use App\Models\Company;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,9 @@ class DriverController extends Controller
                 'company_registration_number' => $request->company_registration_number,
                 'company_type' => $request->company_type,
             ]);
-
+            Wallet::create([
+                'user_id' => $user->id
+            ]);
             DB::commit();
 
             return response()->json([
