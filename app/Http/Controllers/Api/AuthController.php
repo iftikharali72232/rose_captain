@@ -98,6 +98,12 @@ class AuthController extends Controller
                 'message' => 'Driver not found.',
             ], 404);
         }
+        if ($driver->status == 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please wait untill admin approved your account.',
+            ], 404);
+        }
 
         if ($driver->otp !== $request->otp || now()->gt($driver->otp_expires_at)) {
             return response()->json([
