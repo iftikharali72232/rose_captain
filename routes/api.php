@@ -29,7 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // protected routes
-Route::group(["middleware" => "auth:sanctum"], function () {
+Route::group(["middleware" => "auth:api"], function () {
     // Requests
 
     Route::post('/driver/logout', [AuthController::class, 'logout']);
