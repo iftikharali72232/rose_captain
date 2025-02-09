@@ -40,10 +40,10 @@ class AuthController extends Controller
         }
         if (!$driver->status) {
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'user' => $driver,
                 'message' => 'Please wait untill your account approved.',
-            ], 404);
+            ], 200);
         }
         // Generate OTP
         $otp = mt_rand(1000, 9999);
