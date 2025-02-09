@@ -23,7 +23,7 @@ class User extends Controller
     
     public function updateStatus($id)
     {
-        $driver = Driver::findOrFail($id);
+        $driver = ModelsUser::findOrFail($id);
         $driver->status = $driver->status ? 0 : 1; // Toggle status between 0 and 1
         $driver->save();
 

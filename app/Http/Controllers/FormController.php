@@ -24,7 +24,7 @@ class FormController extends Controller
 
         try {
             // Create the user
-            $user = Driver::create([
+            $user = User::create([
                 'name' => $request->name,
                 'mobile' => $request->mobile,
                 'id_number' => $request->id_number,
@@ -63,7 +63,7 @@ class FormController extends Controller
     // List all drivers (Users with user_type = 1)
     public function drivers()
     {
-        $drivers = Driver::where('user_type', 1)->get();
+        $drivers = User::where('user_type', 1)->get();
         return view('drivers.index', compact('drivers'));
     }
 
