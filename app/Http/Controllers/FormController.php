@@ -14,7 +14,7 @@ class FormController extends Controller
 {
     public function create()
     {
-        return view('form'); // Render the form view
+        return view('drivers.create'); // Render the form view
     }
 
     public function store(StoreFormRequest $request)

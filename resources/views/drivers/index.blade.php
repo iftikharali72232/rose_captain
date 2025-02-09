@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-2xl mx-auto bg-white p-4 rounded-2 shadow-sm">
-    <h2 class="fw-bold mb-6">Drivers List</h2>
+    <h2 class="fw-bold mb-6">{{ trans('lang.drivers_list') }}</h2>
     <hr>
 
     <div class="table-responsive">
@@ -10,11 +10,11 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>ID Number</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>{{ trans('lang.name') }}</th>
+                    <th>{{ trans('lang.mobile') }}</th>
+                    <th>{{ trans('lang.id_number') }}</th>
+                    <th>{{ trans('lang.status') }}</th>
+                    <th>{{ trans('lang.action') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
                     <td>{{ $driver->id_number }}</td>
                     <td>
                         <span class="badge {{ $driver->status ? 'bg-success' : 'bg-danger' }}">
-                            {{ $driver->status ? 'Approved' : 'Unapproved' }}
+                            {{ $driver->status ? trans('lang.approved') : trans('lang.unapproved') }}
                         </span>
                     </td>
                     <td>
@@ -34,7 +34,7 @@
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="btn btn-sm {{ $driver->status ? 'btn-danger' : 'btn-success' }}">
-                                {{ $driver->status ? 'Unapprove' : 'Approve' }}
+                                {{ $driver->status ? trans('lang.unapprove') : trans('lang.approve') }}
                             </button>
                         </form>
                     </td>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="pagetitle">
+<div class="d-none pagetitle">
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
@@ -743,7 +743,7 @@
                 </div>
             </div>
         </form>
-    </div>
+</div>
 @endsection
 
 
