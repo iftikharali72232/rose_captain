@@ -122,7 +122,7 @@ class AuthController extends Controller
 
         // Clear OTP after successful verification
         $driver->otp = null;
-        $driver->otp_expires_at = null;
+        // $driver->otp_expires_at = null;
         $driver->save();
 
         $token = $driver->createToken('DriverAuthToken')->plainTextToken;
