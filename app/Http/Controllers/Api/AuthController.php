@@ -125,8 +125,7 @@ class AuthController extends Controller
         // $driver->otp_expires_at = null;
         $driver->save();
 
-        $token = $driver->createToken('DriverAuthToken')->plainTextToken;
-
+        $token = $driver->createToken('auth_token')->plainTextToken;
         return response()->json([
             'success' => true,
             'message' => 'Login successful.',
