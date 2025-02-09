@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CarTypeController;
 use App\Http\Controllers\Api\VehicleController;
 
 /*
@@ -32,5 +33,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::get('/driver/car', [VehicleController::class, 'show']);
     Route::post('/driver/car/update', [VehicleController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
+    Route::get('car-types', [CarTypeController::class, 'index']);
 
 });
