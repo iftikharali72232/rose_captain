@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\VehicleController;
 Route::post('/drivers', [DriverController::class, 'store']);
 Route::post('/driver/login', [AuthController::class, 'login']);
 Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::get('car-types', [CarTypeController::class, 'index']);
 
 // protected routes
 Route::group(["middleware" => "auth:sanctum"], function () {
@@ -33,6 +34,5 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::get('/driver/car', [VehicleController::class, 'show']);
     Route::post('/driver/car/update', [VehicleController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
-    Route::get('car-types', [CarTypeController::class, 'index']);
 
 });
