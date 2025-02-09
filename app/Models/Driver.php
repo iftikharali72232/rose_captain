@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Driver extends Authenticatable
 {
     use HasApiTokens, HasFactory;
-    protected $fillable = ['name', 'mobile', 'id_number', 'user_type'];
+    protected $fillable = ['name', 'mobile', 'id_number', 'user_type', 'status'];
 
     public function vehicle()
     {

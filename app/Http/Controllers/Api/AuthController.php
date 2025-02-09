@@ -41,6 +41,7 @@ class AuthController extends Controller
         if (!$driver->status) {
             return response()->json([
                 'success' => false,
+                'user' => $driver,
                 'message' => 'Please wait untill your account approved.',
             ], 404);
         }
@@ -75,6 +76,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
+            'user' => $driver,
             'message' => 'OTP sent to your mobile number.',
         ], 200);
     }
