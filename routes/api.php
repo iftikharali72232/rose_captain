@@ -25,7 +25,7 @@ Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::get('car-types', [CarTypeController::class, 'index']);
 
 // protected routes
-Route::group(["middleware" => "auth:sanctum"], function () {
+Route::middleware('auth:api')->get('/driver/profile', function (Request $request) {
     // Requests
 
     Route::post('/driver/logout', [AuthController::class, 'logout']);
