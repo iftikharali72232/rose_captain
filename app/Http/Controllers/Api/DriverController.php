@@ -7,6 +7,7 @@ use App\Http\Requests\StoreFormRequest;
 use App\Models\Driver;
 use App\Models\Vehicle;
 use App\Models\Company;
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class DriverController extends Controller
 
         try {
             // Create the user (driver)
-            $user = Driver::create([
+            $user = User::create([
                 'name' => $request->name,
                 'mobile' => $request->mobile,
                 'id_number' => $request->id_number,

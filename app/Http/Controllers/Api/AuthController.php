@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $driver = Driver::where('mobile', $request->mobile)->first();
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
 
         if (!$driver) {
             return response()->json([
@@ -97,7 +98,7 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $driver = Driver::where('mobile', $request->mobile)->first();
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
 
         if (!$driver) {
             return response()->json([
