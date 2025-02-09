@@ -24,12 +24,12 @@ Route::post('/driver/login', [AuthController::class, 'login']);
 Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::get('car-types', [CarTypeController::class, 'index']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 // protected routes
-Route::group(["middleware" => "auth:api"], function () {
+Route::group(["middleware" => "auth:sanctum"], function () {
     // Requests
 
     Route::post('/driver/logout', [AuthController::class, 'logout']);
