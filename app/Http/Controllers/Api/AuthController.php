@@ -62,7 +62,7 @@ class AuthController extends Controller
                         'recipients' => [$driver->mobile],
                         'body' => "Your OTP code is: $otp\nValid for 10 minutes"
                     ]);
-
+print_r($response); exit;
             if (!$response->successful()) {
                 Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
             }
