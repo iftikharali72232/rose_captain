@@ -124,7 +124,7 @@ class AuthController extends Controller
         $driver->otp = null;
         // $driver->otp_expires_at = null;
         $driver->save();
-        
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
         $token = $driver->createToken('auth_token')->plainTextToken;
         return response()->json([
             'success' => true,
