@@ -12,10 +12,8 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'token', // Agar JWT ya Passport use kar rahe hain to 'jwt' karein
+            'driver' => 'sanctum', // Agar JWT ya Passport use kar rahe hain to 'jwt' karein
             'provider' => 'drivers',
-            'hash' => false,
-            'expires' => 60,
         ],
     ],
 
