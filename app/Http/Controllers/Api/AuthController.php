@@ -38,7 +38,12 @@ class AuthController extends Controller
                 'message' => 'Driver not found.',
             ], 404);
         }
-
+        if (!$driver->status) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please wait untill your account approved.',
+            ], 404);
+        }
         // Generate OTP
         $otp = mt_rand(1000, 9999);
         $driver->otp = $otp;

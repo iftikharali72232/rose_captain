@@ -12,7 +12,7 @@ class StoreFormRequest extends FormRequest
             'name' => 'required|string|max:255',
             'mobile' => 'required|string|max:15',
             'id_number' => 'required|string|max:50',
-            'car_type' => 'required|string|max:100',
+            'car_type' => 'required|int',
             'number_of_passengers' => 'required|integer',
             'car_model' => 'required|string|max:100',
             'car_color' => 'required|string|max:50',

@@ -1,6 +1,7 @@
 
 <?php
 
+use App\Http\Controllers\CarTypeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LangController;
@@ -44,10 +45,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/form', [FormController::class, 'store'])->name('form.store');
 
     Route::get('/drivers', [FormController::class, 'drivers'])->name('drivers.index');
+    Route::get('/drivers/create', [FormController::class, 'create'])->name('drivers.create');
     Route::get('/vehicles', [FormController::class, 'vehicles'])->name('vehicles.index');
     Route::get('/companies', [FormController::class, 'companies'])->name('companies.index');
     Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
     Route::resource('wallet', WalletController::class);
     
+    Route::get('car-types', [CarTypeController::class, 'index'])->name('car_types.index');
+    Route::get('car-types/create', [CarTypeController::class, 'create'])->name('car_types.create');
+    Route::post('car-types', [CarTypeController::class, 'store'])->name('car_types.store');
+    Route::get('car-types/{id}/edit', [CarTypeController::class, 'edit'])->name('car_types.edit');
+    Route::put('car-types/{id}', [CarTypeController::class, 'update'])->name('car_types.update');
+    Route::delete('car-types/{id}', [CarTypeController::class, 'destroy'])->name('car_types.destroy');
 });
 

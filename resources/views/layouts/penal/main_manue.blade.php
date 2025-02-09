@@ -20,6 +20,11 @@
             <i class="bi bi-circle"></i><span>{{trans('lang.user_list')}}</span>
           </a>
         </li>
+        <li>
+          <a href="{{route('drivers.create')}}">
+            <i class="bi bi-circle"></i><span>{{trans('lang.user_create')}}</span>
+          </a>
+        </li>
       </ul>
     </li>
 
@@ -56,6 +61,18 @@
         <li>
           <a href="{{route('wallet.index')}}">
             <i class="bi bi-circle"></i><span>Wallet List</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed {{ Route::currentRouteName() == 'wallet.index' ? 'addBg' : '' }}" data-bs-target="#car_type" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-sliders"></i><span>Car Type</span><i class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
+      </a>
+      <ul id="car_type" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{route('car_types.index')}}">
+            <i class="bi bi-circle"></i><span>Car Type List</span>
           </a>
         </li>
       </ul>

@@ -40,6 +40,7 @@ class DriverController extends Controller
             $company = Company::create([
                 'user_id' => $user->id,
                 'company_name' => $request->company_name,
+                'company_location' => $request->company_location,
                 'company_registration_number' => $request->company_registration_number,
                 'company_type' => $request->company_type,
             ]);
