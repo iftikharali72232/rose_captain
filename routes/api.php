@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarTypeController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\VehicleController;
 
 /*
@@ -33,6 +34,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::get('/driver/car', [VehicleController::class, 'show']);
     Route::post('/driver/car/update', [VehicleController::class, 'update']);
+    Route::get('/driver/company', [CompanyController::class, 'show']);
+    Route::post('/driver/company/update', [CompanyController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
 
 });
