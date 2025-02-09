@@ -53,26 +53,26 @@ class AuthController extends Controller
         $driver->save();
 
         // Send SMS via Taqnyat
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . config('services.taqnyat.bearer_token'),
-                'Content-Type' => 'application/json',
-            ])->post(config('services.taqnyat.url'), [
-                        'sender' => config('services.taqnyat.sender'),
-                        'recipients' => [$driver->mobile],
-                        'body' => "Your OTP code is: $otp\nValid for 10 minutes"
-                    ]);
+        // try {
+        //     $response = Http::withHeaders([
+        //         'Authorization' => 'Bearer ' . config('services.taqnyat.bearer_token'),
+        //         'Content-Type' => 'application/json',
+        //     ])->post(config('services.taqnyat.url'), [
+        //                 'sender' => config('services.taqnyat.sender'),
+        //                 'recipients' => [$driver->mobile],
+        //                 'body' => "Your OTP code is: $otp\nValid for 10 minutes"
+        //             ]);
 
-            if (!$response->successful()) {
-                Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
-            }
-        } catch (\Exception $e) {
-            Log::info('Taqnyat URL', ['url' => config('services.taqnyat.url')]);
-            Log::error('SMS Send Error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-        }
+        //     if (!$response->successful()) {
+        //         Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
+        //     }
+        // } catch (\Exception $e) {
+        //     Log::info('Taqnyat URL', ['url' => config('services.taqnyat.url')]);
+        //     Log::error('SMS Send Error', [
+        //         'error' => $e->getMessage(),
+        //         'trace' => $e->getTraceAsString(),
+        //     ]);
+        // }
 
 
         return response()->json([
