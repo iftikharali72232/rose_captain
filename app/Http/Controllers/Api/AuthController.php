@@ -46,12 +46,19 @@ class AuthController extends Controller
                 'message' => 'Please wait untill your account approved.',
             ], 200);
         }
-        // Generate OTP
+        // Generate OTP even if the account is unapproved
         $otp = mt_rand(1000, 9999);
         $driver->otp = $otp;
         $driver->otp_expires_at = now()->addMinutes(10);
         $driver->save();
 
+        // Check account status after saving OTP
+        if (!$driver->status) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Please wait until your account is approved.',
+            ], 200);
+        }
         // Send SMS via Taqnyat
         try {
             $response = Http::withHeaders([
@@ -155,13 +162,13 @@ class AuthController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user(); // Get authenticated user
 
-        // Validate the request
+        // Validate the request without requiring 'id'
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'mobile' => 'sometimes|string|max:20|unique:users,mobile,' . $user->id,  
-            'id_number' => 'sometimes|string|max:20|unique:users,id_number,' . $user->id,  
+            'mobile' => 'sometimes|string|max:20|unique:users,mobile,' . $user->id,
+            'id_number' => 'sometimes|string|max:20|unique:users,id_number,' . $user->id,
         ]);
 
         if ($validator->fails()) {
@@ -172,8 +179,14 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Update profile fields only if provided
-        $user->update($request->only(['name', 'mobile', 'id_number']));
+        // Update all fields provided in the request
+        $updateData = $request->except(['id']);
+        \Log::info('Updating user with data:', $updateData);
+
+        $user->update($updateData);
+
+        // Refresh to get updated values from the database
+        $user->refresh();
 
         return response()->json([
             'success' => true,
@@ -181,6 +194,8 @@ class AuthController extends Controller
             'driver' => $user,
         ], 200);
     }
+
+
     public function deleteAccount(Request $request)
     {
         $user = $request->user(); // Get authenticated driver

@@ -34,7 +34,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     Route::post('/driver/logout', [AuthController::class, 'logout']);
     Route::post('/driver/logout-all', [AuthController::class, 'logoutFromAllDevices']);
-    Route::post('/driver/update-profile', [AuthController::class, 'updateProfile']);
+    Route::patch('/driver/update-profile', [AuthController::class, 'updateProfile']);
 
     Route::get('/driver/car', [VehicleController::class, 'show']);
     Route::post('/driver/car/update', [VehicleController::class, 'update']);
