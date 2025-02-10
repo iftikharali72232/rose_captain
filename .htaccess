@@ -10,6 +10,10 @@ RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ ^$1 [N]
 
 RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+# Ensure the Authorization header is passed to PHP
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 RewriteRule ^(.*)$ public/$1
 
 RewriteCond %{REQUEST_FILENAME} !-d
