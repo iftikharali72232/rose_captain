@@ -155,13 +155,13 @@ class AuthController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        $user = $request->user(); // Get the authenticated driver
+        $user = $request->user();
 
         // Validate the request
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'mobile' => 'sometimes|string|max:20|unique:drivers,mobile,' . $user->id,
-            'id_number' => 'sometimes|string|max:20|unique:drivers,id_number,' . $user->id,
+            'mobile' => 'sometimes|string|max:20|unique:users,mobile,' . $user->id,  
+            'id_number' => 'sometimes|string|max:20|unique:users,id_number,' . $user->id,  
         ]);
 
         if ($validator->fails()) {
