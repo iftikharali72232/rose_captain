@@ -20,11 +20,11 @@
             <i class="bi bi-circle"></i><span>{{ trans('lang.user_list') }}</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="{{ route('drivers.create') }}">
             <i class="bi bi-circle"></i><span>{{ trans('lang.user_create') }}</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </li>
 

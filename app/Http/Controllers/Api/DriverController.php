@@ -16,6 +16,14 @@ class DriverController extends Controller
 {
     public function store(StoreFormRequest $request)
     {
+        $user = User::where('mobile', $request->mobile)->first();
+        if($user)
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mobile Number already exists.',
+            ], 404);
+        }
         DB::beginTransaction();
 
         try {

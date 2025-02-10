@@ -24,7 +24,7 @@ return [
     'logout'                            => 'تسجيل الخروج',
     'dashboard'                         => 'لوحة التحكم',
     'users'                             => 'المستخدمون',
-    'user_list'                         => 'قائمة المستخدمين',
+    'user_list'                         => 'قائمة السواقين',
     'user_create'                       => 'إنشاء مستخدم',
     'companies'                         => 'الشركات',
     'company_list'                      => 'قائمة الشركات',
