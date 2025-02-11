@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -24,7 +25,9 @@ class User extends Authenticatable
         'image',
         'mobile',
         'user_type',
-        'password',
+        'id_image',
+        'id_number',
+        'license_image_url',
         'status',
         'address',
         'country',
@@ -36,6 +39,18 @@ class User extends Authenticatable
         'device_token',
         'is_available'
     ];
+
+    // Correct method name
+    public function getLicenseImageUrlAttribute()
+    {
+        return $this->license_image ? Storage::disk('public')->url($this->license_image) : null;
+    }
+
+    public function getIdImageUrlAttribute()
+    {
+        return $this->id_image ? Storage::disk('public')->url($this->id_image) : null;
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -77,17 +92,16 @@ class User extends Authenticatable
         // $body = $data['body'];
         // // $subtitle = $data['subtitle'];
         // $serverKey = $data['is_driver'] == 1 ? env('DRIVER_SERVER_KEY') : env('USER_SERVER_KEY');  // Assuming server key is sent in request for simplicity
-        if(isset($data['is_driver']) && $data['is_driver'] == 1)
-        {
-            $url = 'https://fcm.googleapis.com/v1/projects/'.getenv('DRIVER_PROJECT_ID').'/messages:send';
+        if (isset($data['is_driver']) && $data['is_driver'] == 1) {
+            $url = 'https://fcm.googleapis.com/v1/projects/' . getenv('DRIVER_PROJECT_ID') . '/messages:send';
 
             // Set your client credentials and refresh token
             $client_id = getenv('GOOGLE_CLIENT_ID_d');
             $client_secret = getenv('GOOGLE_CLIENT_SECRET_d');
             $refresh_token = getenv('DRIVER_REFRESH_TOKEN'); // Replace with your actual refresh token
         } else {
-            $url = 'https://fcm.googleapis.com/v1/projects/'.getenv('DELIVERY_PROJECT_ID').'/messages:send';
-    
+            $url = 'https://fcm.googleapis.com/v1/projects/' . getenv('DELIVERY_PROJECT_ID') . '/messages:send';
+
             // Set your client credentials and refresh token
             $client_id = getenv('GOOGLE_CLIENT_ID');
             $client_secret = getenv('GOOGLE_CLIENT_SECRET');
@@ -140,7 +154,7 @@ class User extends Authenticatable
         // Extract the new access token
         $newAccessToken = $response_data['access_token'];
         $headers = [
-            'Authorization: Bearer '.$newAccessToken,
+            'Authorization: Bearer ' . $newAccessToken,
             'Content-Type: application/json'
         ];
 
@@ -159,13 +173,13 @@ class User extends Authenticatable
         //dN-4DUh1TamgfSsYKPvjM0:APA91bEOO5VxmPUDrI4kskY-LF7btvIoToiHEJ5mNYPd3SGU6ESsgcKD7oCCSXaFpeUSC27NPbZ8xSjPE6BsLScCSQjyVy6Dv0Ltp-PFDob_wGtGyt1PkVo6gnf6UsZKOAm1LAvBuwri
         $fields = '{
             "message": {
-                 "token":"'.$data['device_token'].'",
+                 "token":"' . $data['device_token'] . '",
                  "notification":{
-                     "title":"'.$data['title'].'",
-                     "body":"'.$data['body'].'"
+                     "title":"' . $data['title'] . '",
+                     "body":"' . $data['body'] . '"
                  },
                  "data": {
-                    "request_id": "'.$data['request_id'].'"
+                    "request_id": "' . $data['request_id'] . '"
                 }
              }
          }';
@@ -177,7 +191,7 @@ class User extends Authenticatable
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-    
+
         // print_r($ch); exit;
         $result = curl_exec($ch);
         if ($result === FALSE) {
@@ -190,14 +204,14 @@ class User extends Authenticatable
 
     // public static function sendNotification($data)
     // {
-        
+
     //         $url = 'https://fcm.googleapis.com/v1/projects/opatra-d5bda/messages:send';
 
     //         // Set your client credentials and refresh token
     //         $client_id = getenv('GOOGLE_CLIENT_ID_junaid');
     //         $client_secret = getenv('GOOGLE_CLIENT_SECRET_junaid');
     //         $refresh_token = getenv('DRIVER_REFRESH_TOKEN_junaid'); // Replace with your actual refresh token
-        
+
     //     // echo $url; exit;
     //     $token_url = 'https://oauth2.googleapis.com/token';
 
@@ -268,7 +282,7 @@ class User extends Authenticatable
     //     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
     //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     //     curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-    
+
     //     // print_r($ch); exit;
     //     $result = curl_exec($ch);
     //     if ($result === FALSE) {
