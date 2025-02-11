@@ -15,5 +15,15 @@ RewriteRule ^(.*)$ public/$1
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ server.php
+
+# Ensure the Authorization header is passed to PHP
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
 </IfModule>
 
