@@ -36,9 +36,9 @@ class CarTypeController extends Controller
     {
         $carType = CarType::findOrFail($id);
 
-        $request->validate(['name' => 'required|unique:car_types,name,' . $id . '|max:255']);
+        $request->validate(['name' => 'required|unique:car_types,name,' . $id . '|max:255', 'name_ar' => 'required']);
 
-        $carType->update(['name' => $request->name]);
+        $carType->update(['name' => $request->name, 'name_ar' => $request->name_ar]);
 
         return redirect()->route('car_types.index')->with('success', 'Car Type updated successfully.');
     }
