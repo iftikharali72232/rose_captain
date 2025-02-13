@@ -81,4 +81,5 @@ return [
     'licence_plate'                     => 'رقم لوحة السيارة',
     'company_reg_num'                   => 'رقم سجل تجاري',
     'submit'                            => 'إرسال',
+    'name_ar'                           => "الاسم العربي"
 ];

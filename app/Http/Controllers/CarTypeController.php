@@ -19,9 +19,9 @@ class CarTypeController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|unique:car_types|max:255']);
+        $request->validate(['name' => 'required|unique:car_types|max:255','name_ar' => 'required']);
 
-        CarType::create(['name' => $request->name]);
+        CarType::create(['name' => $request->name, 'name_ar' => $request->name_ar]);
 
         return redirect()->route('car_types.index')->with('success', 'Car Type added successfully.');
     }

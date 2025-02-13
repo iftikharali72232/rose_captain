@@ -96,5 +96,5 @@ return [
     'company_reg_num' => 'Company Registration Number',
     'company_type' => 'Company Type',
     'submit' => 'Submit',
-
+    'name_ar' => "Arabic Name"
 ];

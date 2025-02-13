@@ -14,6 +14,7 @@
             <tr>
                 <th>{{ trans('lang.id') }}</th>
                 <th>{{ trans('lang.name') }}</th>
+                <th>{{ trans('lang.name_ar') }}</th>
                 <th>{{ trans('lang.actions') }}</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $carType->id }}</td>
                     <td>{{ $carType->name }}</td>
+                    <td>{{ $carType->name_ar }}</td>
                     <td>
                         <a href="{{ route('car_types.edit', $carType->id) }}" class="btn btn-warning">{{ trans('lang.edit') }}</a>
                         <form action="{{ route('car_types.destroy', $carType->id) }}" method="POST" style="display:inline;">
