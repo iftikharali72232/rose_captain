@@ -46,7 +46,7 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all(), [
             'company_name' => 'sometimes|string',
             'company_registration_number' => 'sometimes|string', // Fixed: It's VARCHAR in DB
-            'company_type' => 'sometimes|int', // Fixed: It's VARCHAR in DB
+            'company_type' => 'sometimes', // Fixed: It's VARCHAR in DB
             'company_location' => 'sometimes|string|nullable',
         ]);
 
