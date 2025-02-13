@@ -14,12 +14,13 @@ class DriverController extends Controller
 {
     public function store(StoreFormRequest $request)
     {
+        $lang = $request->lang;
         $user = User::where('mobile', $request->mobile)->first();
         if($user)
         {
             return response()->json([
                 'success' => false,
-                'message' => 'Mobile Number already exists.',
+                'message' =>    $lang == "en" ?  'Mobile Number already exists.' : "رقم الجوال موجود بالفعل.",
             ], 404);
         }
         DB::beginTransaction();
@@ -75,7 +76,7 @@ class DriverController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Driver registration successful',
+                'message' => $lang == "en" ?  'Driver registration successful' : "تم تسجيل السائق بنجاح.",
                 'data' => [
                     'driver' => $user->append(['id_image_url', 'license_image_url']),
                     'vehicle' => $vehicle->append(['car_image_url']),
@@ -88,7 +89,7 @@ class DriverController extends Controller
             \Log::error('Registration Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Registration failed',
+                'message' => $lang == "en" ? 'Registration failed' : "فشل التسجيل.",
                 'error' => config('app.debug') ? $e->getMessage() : null,
             ], 500);
         }

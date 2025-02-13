@@ -23,10 +23,28 @@ class AuthController extends Controller
             'mobile' => 'required|string',
         ]);
 
+        $lang = $request->lang ?? 'en'; // Default to English if $lang is not provided
+
+        // Define messages in both languages
+        $messages = [
+            'en' => [
+                'invalid_input' => 'Invalid input.',
+                'driver_not_found' => 'Driver not found.',
+                'account_pending' => 'Please wait until your account is approved.',
+                'otp_sent' => 'OTP sent to your mobile number.',
+            ],
+            'ar' => [
+                'invalid_input' => 'إدخال غير صالح.',
+                'driver_not_found' => 'لم يتم العثور على السائق.',
+                'account_pending' => 'يرجى الانتظار حتى تتم الموافقة على حسابك.',
+                'otp_sent' => 'تم إرسال رمز OTP إلى رقم جوالك.',
+            ]
+        ];
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid input.',
+                'message' => $messages[$lang]['invalid_input'],
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -36,40 +54,35 @@ class AuthController extends Controller
         if (!$driver) {
             return response()->json([
                 'success' => false,
-                'message' => 'Driver not found.',
+                'message' => $messages[$lang]['driver_not_found'],
             ], 404);
         }
+
         if (!$driver->status) {
             return response()->json([
                 'success' => true,
                 'user' => $driver,
-                'message' => 'Please wait untill your account approved.',
+                'message' => $messages[$lang]['account_pending'],
             ], 200);
         }
-        // Generate OTP even if the account is unapproved
+
+        // Generate OTP
         $otp = mt_rand(1000, 9999);
         $driver->otp = $otp;
         $driver->otp_expires_at = now()->addMinutes(10);
         $driver->save();
 
-        // Check account status after saving OTP
-        if (!$driver->status) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Please wait until your account is approved.',
-            ], 200);
-        }
         // Send SMS via Taqnyat
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . config('services.taqnyat.bearer_token'),
                 'Content-Type' => 'application/json',
             ])->post(config('services.taqnyat.url'), [
-                        'sender' => config('services.taqnyat.sender'),
-                        'recipients' => [$driver->mobile],
-                        'body' => "Your OTP code is: $otp\nValid for 10 minutes"
-                    ]);
-            // print_r($response); exit;
+                'sender' => config('services.taqnyat.sender'),
+                'recipients' => [$driver->mobile],
+                'body' => "Your OTP code is: $otp\nValid for 10 minutes"
+            ]);
+
             if (!$response->successful()) {
                 Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
             }
@@ -81,13 +94,13 @@ class AuthController extends Controller
             ]);
         }
 
-
         return response()->json([
             'success' => true,
             'user' => $driver,
-            'message' => 'OTP sent to your mobile number.',
+            'message' => $messages[$lang]['otp_sent'],
         ], 200);
     }
+
 
 
     public function verifyOtp(Request $request)
@@ -96,61 +109,91 @@ class AuthController extends Controller
             'mobile' => 'required|string',
             'otp' => 'required|string|digits:4',
         ]);
-
+    
+        $lang = $request->lang ?? 'en'; // Default to English if $lang is not provided
+    
+        // Define messages in both languages
+        $messages = [
+            'en' => [
+                'invalid_input' => 'Invalid input.',
+                'driver_not_found' => 'Driver not found.',
+                'account_pending' => 'Please wait until admin approves your account.',
+                'invalid_otp' => 'Invalid or expired OTP.',
+                'login_success' => 'Login successful.',
+            ],
+            'ar' => [
+                'invalid_input' => 'إدخال غير صالح.',
+                'driver_not_found' => 'لم يتم العثور على السائق.',
+                'account_pending' => 'يرجى الانتظار حتى يوافق المشرف على حسابك.',
+                'invalid_otp' => 'رمز OTP غير صالح أو منتهي الصلاحية.',
+                'login_success' => 'تم تسجيل الدخول بنجاح.',
+            ]
+        ];
+    
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid input.',
+                'message' => $messages[$lang]['invalid_input'],
                 'errors' => $validator->errors(),
             ], 422);
         }
-
+    
         $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
-
+    
         if (!$driver) {
             return response()->json([
                 'success' => false,
-                'message' => 'Driver not found.',
+                'message' => $messages[$lang]['driver_not_found'],
             ], 404);
         }
+    
         if ($driver->status == 0) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please wait untill admin approved your account.',
+                'message' => $messages[$lang]['account_pending'],
             ], 404);
         }
-
+    
         if ($driver->otp !== $request->otp || now()->gt($driver->otp_expires_at)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid or expired OTP.',
+                'message' => $messages[$lang]['invalid_otp'],
             ], 401);
         }
-
+    
         // Clear OTP after successful verification
         $driver->otp = null;
-        // $driver->otp_expires_at = null;
         $driver->save();
-        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
+    
+        // Generate authentication token
         $token = $driver->createToken('auth_token')->plainTextToken;
+    
         return response()->json([
             'success' => true,
-            'message' => 'Login successful.',
+            'message' => $messages[$lang]['login_success'],
             'token' => $token,
             'driver' => $driver,
         ], 200);
     }
-
+    
     public function logout(Request $request)
     {
+        $lang = $request->lang ?? 'en'; // Default to English if $lang is not provided
+    
+        $messages = [
+            'en' => ['logout_success' => 'Logout successful.'],
+            'ar' => ['logout_success' => 'تم تسجيل الخروج بنجاح.']
+        ];
+    
         // Revoke the currently authenticated driver's token
         $request->user()->currentAccessToken()->delete();
-
+    
         return response()->json([
             'success' => true,
-            'message' => 'Logout successful.',
+            'message' => $messages[$lang]['logout_success'],
         ], 200);
     }
+    
     public function logoutFromAllDevices(Request $request)
     {
         $request->user()->tokens()->delete();
