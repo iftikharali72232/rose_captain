@@ -42,4 +42,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post('/driver/company/update', [CompanyController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
 
+    Route::get('/privacy-policy',[\App\Http\Controllers\Api\PrivacyPolicy::class,'show']);
+    Route::resource('booking',\App\Http\Controllers\Api\BookingController::class);
+
 });
