@@ -37,7 +37,8 @@ class User extends Authenticatable
         'bank_id',
         'bank_account',
         'device_token',
-        'is_available'
+        'is_available',
+        'driver_image'
     ];
 
     // Correct method name
@@ -50,6 +51,11 @@ class User extends Authenticatable
     {
         return $this->id_image ? Storage::disk('public')->url($this->id_image) : null;
     }
+
+  /*  public function getDriverImageAttribute()
+    {
+        return $this->driver_image ? Storage::disk('public')->url($this->driver_image) : null;
+    }*/
 
 
     /**

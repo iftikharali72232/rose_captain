@@ -17,8 +17,13 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+
+    }
     public function login(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|string',
         ]);
@@ -51,6 +56,11 @@ class AuthController extends Controller
 
         $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
 
+
+        if (!$driver) {
+            $driver = User::where('name', 'guest')->where('user_type', 1)->first();
+        }
+
         if (!$driver) {
             return response()->json([
                 'success' => false,
@@ -69,8 +79,10 @@ class AuthController extends Controller
         // Generate OTP
         $otp = mt_rand(1000, 9999);
         $driver->otp = $otp;
+        $driver->mobile = $request->mobile;
         $driver->otp_expires_at = now()->addMinutes(10);
         $driver->save();
+
 
         // Send SMS via Taqnyat
         try {
@@ -109,9 +121,9 @@ class AuthController extends Controller
             'mobile' => 'required|string',
             'otp' => 'required|string|digits:4',
         ]);
-    
+
         $lang = $request->lang ?? 'en'; // Default to English if $lang is not provided
-    
+
         // Define messages in both languages
         $messages = [
             'en' => [
@@ -129,7 +141,7 @@ class AuthController extends Controller
                 'login_success' => 'تم تسجيل الدخول بنجاح.',
             ]
         ];
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -137,37 +149,37 @@ class AuthController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-    
-        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->first();
-    
+
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->where('name','!=','guest')->first();
+
         if (!$driver) {
             return response()->json([
                 'success' => false,
                 'message' => $messages[$lang]['driver_not_found'],
             ], 404);
         }
-    
+
         if ($driver->status == 0) {
             return response()->json([
                 'success' => false,
                 'message' => $messages[$lang]['account_pending'],
             ], 404);
         }
-    
+
         if ($driver->otp !== $request->otp || now()->gt($driver->otp_expires_at)) {
             return response()->json([
                 'success' => false,
                 'message' => $messages[$lang]['invalid_otp'],
             ], 401);
         }
-    
+
         // Clear OTP after successful verification
         $driver->otp = null;
         $driver->save();
-    
+
         // Generate authentication token
         $token = $driver->createToken('auth_token')->plainTextToken;
-    
+
         return response()->json([
             'success' => true,
             'message' => $messages[$lang]['login_success'],
@@ -175,25 +187,25 @@ class AuthController extends Controller
             'driver' => $driver,
         ], 200);
     }
-    
+
     public function logout(Request $request)
     {
         $lang = $request->lang ?? 'en'; // Default to English if $lang is not provided
-    
+
         $messages = [
             'en' => ['logout_success' => 'Logout successful.'],
             'ar' => ['logout_success' => 'تم تسجيل الخروج بنجاح.']
         ];
-    
+
         // Revoke the currently authenticated driver's token
         $request->user()->currentAccessToken()->delete();
-    
+
         return response()->json([
             'success' => true,
             'message' => $messages[$lang]['logout_success'],
         ], 200);
     }
-    
+
     public function logoutFromAllDevices(Request $request)
     {
         $request->user()->tokens()->delete();

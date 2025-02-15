@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class DriverController extends Controller
 {
+    public function __construct()
+    {
+
+    }
     public function store(StoreFormRequest $request)
     {
+
         $lang = $request->lang;
         $user = User::where('mobile', $request->mobile)->first();
         if($user)
@@ -28,6 +33,7 @@ class DriverController extends Controller
         try {
             // Handle image uploads with better naming
             $idImagePath = $request->file('id_image')->store('drivers/ids', 'public');
+            $driver_image = $request->file('car_image')->store('drivers/driver', 'public');
 
 
             $carImagePath = $request->file('car_image')->store(
@@ -47,7 +53,8 @@ class DriverController extends Controller
                 'id_number' => $request->id_number,
                 'user_type' => 1,
                 'id_image' => $idImagePath,
-                'license_image_url' => $licenseImagePath, 
+                'license_image_url' => $licenseImagePath,
+                'driver_image' => $driver_image,
             ]);
 
             // Create vehicle with car image
@@ -79,6 +86,7 @@ class DriverController extends Controller
                 'message' => $lang == "en" ?  'Driver registration successful' : "تم تسجيل السائق بنجاح.",
                 'data' => [
                     'driver' => $user->append(['id_image_url', 'license_image_url']),
+                    'driver_image'=>$user->driver_image,
                     'vehicle' => $vehicle->append(['car_image_url']),
                     'company' => $company,
                 ],
