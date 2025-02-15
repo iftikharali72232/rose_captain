@@ -23,7 +23,7 @@ Route::post('/drivers', [DriverController::class, 'store']);
 Route::post('/driver/login', [AuthController::class, 'login']);
 Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::get('car-types', [CarTypeController::class, 'index']);
-
+Route::get('/privacy-policy',[\App\Http\Controllers\Api\PrivacyPolicy::class,'show']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -42,7 +42,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post('/driver/company/update', [CompanyController::class, 'update']);
     Route::delete('/driver/delete-account', [AuthController::class, 'deleteAccount']);
 
-    Route::get('/privacy-policy',[\App\Http\Controllers\Api\PrivacyPolicy::class,'show']);
+
     Route::resource('booking',\App\Http\Controllers\Api\BookingController::class);
 
 });
