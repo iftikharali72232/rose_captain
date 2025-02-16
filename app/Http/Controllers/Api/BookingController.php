@@ -17,7 +17,23 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+
+        try {
+            // Retrieve all bookings with passengers
+            $bookings = Booking::with('passengers')->get();
+
+            return response()->json([
+                'status' => 'success',
+                'bookings' => $bookings
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch bookings!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
