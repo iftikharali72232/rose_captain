@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Passengers;
-
+use Auth;
 class BookingController extends Controller
 {
     /**
@@ -74,7 +74,8 @@ class BookingController extends Controller
             $booking = Booking::create([
                 'from' => $validated['from'],
                 'to' => $validated['to'],
-                'passenger_qty' => count($validated['passengers'])
+                'passenger_qty' => count($validated['passengers']),
+                'user_id' => Auth::id()
             ]);
 
             // Insert passengers
@@ -84,7 +85,8 @@ class BookingController extends Controller
                     'id_number' => $passenger['id_number'], // Fix id_number spelling
                     'name' => $passenger['name'],
                     'nationality' => $passenger['nationality'],
-                    'mobile_number' => $passenger['mobile_number']
+                    'mobile_number' => $passenger['mobile_number'],
+
                 ]);
             }
 
