@@ -97,5 +97,6 @@ return [
     'company_type' => 'Company Type',
     'submit' => 'Submit',
     'name_ar' => "Arabic Name",
-    'id_image' => 'ID Image'
+    'id_image' => 'ID Image',
+    'passengers'   => "passengers",
 ];
