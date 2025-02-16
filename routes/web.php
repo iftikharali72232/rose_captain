@@ -27,6 +27,9 @@ Route::get('lang/{locale}', [LangController::class, 'setLocale'])->name('setLoca
 Route::get('/', function () {
     return redirect()->route('home');
 });
+Route::get('privacy-policy', function () {
+    return view('privacy_policy');
+});
 // routes/web.php
 
 Route::get('/outh', function () {
