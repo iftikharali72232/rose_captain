@@ -59,10 +59,11 @@ class FormController extends Controller
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
-    
+
     // List all drivers (Users with user_type = 1)
     public function drivers()
     {
+
         $drivers = User::where('user_type', 1)->get();
         return view('drivers.index', compact('drivers'));
     }

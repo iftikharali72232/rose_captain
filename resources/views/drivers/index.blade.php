@@ -14,6 +14,7 @@
                     <th>{{ trans('lang.mobile') }}</th>
                     <th>{{ trans('lang.id_number') }}</th>
                     <th>{{ trans('lang.id_image') }}</th>
+                    <th>{{ trans('lang.license_image_url') }}</th>
                     <th>{{ trans('lang.status') }}</th>
                     <th>{{ trans('lang.action') }}</th>
                 </tr>
@@ -31,6 +32,15 @@
                     <td>
                         @if($driver->id_image)
                         <a href="{{ asset('storage/'.$driver->id_image) }}"> ID Image</a>
+                        @else
+                        {{ 'N/A' }}
+                            @endif
+                    </td>
+
+                    <td>
+                        @if($driver->getRawOriginal('license_image_url'))
+
+                        <a href="{{ asset('storage/'.$driver->getRawOriginal('license_image_url')) }}">License Image</a>
                         @else
                         {{ 'N/A' }}
                             @endif

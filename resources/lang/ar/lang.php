@@ -83,5 +83,10 @@ return [
     'submit'                            => 'إرسال',
     'name_ar'                           => "الاسم العربي",
     'passengers'                           => "ركاب",
-    'id_image' =>                       'صورة الهوية'
+    'id_image' =>                       'صورة الهوية',
+    'passengers_list'   => "قائمة الركاب",
+    'passenger_name'   => "اسم الراكب",
+    'nationality'   => "الجنسية",
+    'mobile_no'   => "رقم الجوال",
+    'license_image_url' => "رابط صورة الرخصة",
 ];

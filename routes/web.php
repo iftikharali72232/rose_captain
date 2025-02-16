@@ -50,7 +50,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/companies', [FormController::class, 'companies'])->name('companies.index');
     Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
     Route::resource('wallet', WalletController::class);
-    
+    Route::resource('passenger', \App\Http\Controllers\passengerController::class);
+
     Route::get('car-types', [CarTypeController::class, 'index'])->name('car_types.index');
     Route::get('car-types/create', [CarTypeController::class, 'create'])->name('car_types.create');
     Route::post('car-types', [CarTypeController::class, 'store'])->name('car_types.store');

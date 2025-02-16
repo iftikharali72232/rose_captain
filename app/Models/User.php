@@ -47,6 +47,8 @@ class User extends Authenticatable
         return $this->license_image ? Storage::disk('public')->url($this->license_image) : null;
     }
 
+
+
     public function getIdImageUrlAttribute()
     {
         return $this->id_image ? Storage::disk('public')->url($this->id_image) : null;

@@ -99,4 +99,9 @@ return [
     'name_ar' => "Arabic Name",
     'id_image' => 'ID Image',
     'passengers'   => "passengers",
+    'passengers_list'   => "Passengers List",
+    'passenger_name'   => "Passenger Name",
+    'nationality'   => "Nationality",
+    'mobile_no'   => "Mobile No",
+    'license_image_url' => "License Image URL",
 ];

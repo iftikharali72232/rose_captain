@@ -69,7 +69,7 @@
                     <i class="bi bi-person-check fs-1 text-danger"></i>
                     <h5 class="mt-2">{{ trans('lang.passengers') }}</h5>
                     <p class="fs-4 fw-bold">{{ $passengersCount }}</p>
-                    <a href="" class="stretched-link"></a>
+                    <a href="{{ route('passenger.index') }}" class="stretched-link"></a>
                 </div>
             </div>
         </div>

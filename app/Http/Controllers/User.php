@@ -11,6 +11,7 @@ class User extends Controller
     // List all users
     public function index()
     {
+
         $users = ModelsUser::all();
         return view('users.index', compact('users'));
     }
@@ -20,11 +21,11 @@ class User extends Controller
     {
         return view('users.create');
     }
-    
+
     public function updateStatus($id)
     {
         $driver = ModelsUser::findOrFail($id);
-        $driver->status = $driver->status ? 0 : 1; 
+        $driver->status = $driver->status ? 0 : 1;
         $driver->save();
 
         return redirect()->back()->with('success', 'Driver status updated successfully.');
