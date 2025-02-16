@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+    <head>
+        <style>
+            body {
+                direction: ltr !important;
+                text-align: left !important;
+            }
+        </style>
+    </head>
+    @php
+        Session::put('lang_local','en');
+
+
+    @endphp
     @if(Session::get('lang_local')=='en')
     <div class="container mt-4">
         <div class="card shadow-sm border-0 p-4">
@@ -41,7 +54,7 @@
     </div>
 
     @else
-  
+
             <div class="container mt-4">
                 <div class="card shadow-sm border-0 p-4">
                     <div class="card-body">
