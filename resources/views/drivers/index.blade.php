@@ -13,17 +13,28 @@
                     <th>{{ trans('lang.name') }}</th>
                     <th>{{ trans('lang.mobile') }}</th>
                     <th>{{ trans('lang.id_number') }}</th>
+                    <th>{{ trans('lang.id_image') }}</th>
                     <th>{{ trans('lang.status') }}</th>
                     <th>{{ trans('lang.action') }}</th>
                 </tr>
             </thead>
             <tbody>
+            @php
+                {{ $filePath = storage_path('app/public/your-file.jpg');}}
+            @endphp
                 @foreach ($drivers as $index => $driver)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $driver->name }}</td>
                     <td>{{ $driver->mobile }}</td>
                     <td>{{ $driver->id_number }}</td>
+                    <td>
+                        @if($driver->id_image)
+                        <a href="{{ asset('storage/'.$driver->id_image) }}"> ID Image</a>
+                        @else
+                        {{ 'N/A' }}
+                            @endif
+                    </td>
                     <td>
                         <span class="badge {{ $driver->status ? 'bg-success' : 'bg-danger' }}">
                             {{ $driver->status ? trans('lang.approved') : trans('lang.unapproved') }}

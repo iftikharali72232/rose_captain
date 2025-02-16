@@ -4,6 +4,77 @@
 
 
 <!-- Driver and Vehicle Information Form  -->
+<style>
+    .card {
+        transition: 0.3s ease-in-out;
+        border-radius: 10px;
+        position: relative;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .stretched-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+</style>
+
+<<div class="container mt-4">
+    <div class="row g-4">
+        <!-- User Box -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <div class="card-body">
+                    <i class="bi bi-people fs-1 text-primary"></i>
+                    <h5 class="mt-2">{{ trans('lang.users') }}</h5>
+                    <p class="fs-4 fw-bold">{{ $usersCount }}</p>
+                    <a target="_blank" href="{{ route('drivers.index') }}" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Box -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <div class="card-body">
+                    <i class="bi bi-car-front fs-1 text-success"></i>
+                    <h5 class="mt-2">{{ trans('lang.vehicles') }}</h5>
+                    <p class="fs-4 fw-bold">{{ $vehiclesCount }}</p>
+                    <a target="_blank" href="{{ route('drivers.index') }}" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Box -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <div class="card-body">
+                    <i class="bi bi-building fs-1 text-warning"></i>
+                    <h5 class="mt-2">{{ trans('lang.companies') }}</h5>
+                    <p class="fs-4 fw-bold">{{ $companiesCount }}</p>
+                    <a target="_blank" href="{{ route('companies.index') }}" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Passenger Box -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <div class="card-body">
+                    <i class="bi bi-person-check fs-1 text-danger"></i>
+                    <h5 class="mt-2">{{ trans('lang.passengers') }}</h5>
+                    <p class="fs-4 fw-bold">{{ $passengersCount }}</p>
+                    <a href="" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="d-none max-w-2xl mx-auto bg-white p-4 rounded-2 shadow-sm">
         <h2 class="fw-bold mb-6">Driver and Vehicle Information</h2>
         <hr>
@@ -18,14 +89,14 @@
                         <input type="text" name="name" class="w-100 bg-gray p-2 border rounded" required>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label class="block text-gray-700">ID Number</label>
                     <div class="">
                         <input type="text" name="id_number" class="w-100 bg-gray p-2 border rounded" required>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label class="block text-gray-700">Mobile Number</label>
                     <div class="">

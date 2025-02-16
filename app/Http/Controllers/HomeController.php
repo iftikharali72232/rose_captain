@@ -12,6 +12,9 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentMethod;
+use App\Models\Passengers;
+use App\Models\Company;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -32,9 +35,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-     
+
     public function index()
     {
+
         if (Auth::check()) {
             // Get the current user
             $user = Auth::user();
@@ -48,9 +52,13 @@ class HomeController extends Controller
                 return redirect()->route('login')->with('error', trans('lang.not_valid_user'));
             }
         }
-    
+
+        $usersCount = User::count();
+        $vehiclesCount = Vehicle::count();
+        $companiesCount = Company::count();
+        $passengersCount = Passengers::count();
         // print_r($today_total); exit;
-        return view('home');
+        return view('home',compact('usersCount','vehiclesCount','companiesCount','passengersCount'));
     }
     private function topSellingProducts()
     {
