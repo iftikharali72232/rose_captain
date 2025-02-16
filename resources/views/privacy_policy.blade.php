@@ -41,9 +41,7 @@
     </div>
 
     @else
-        @extends('layouts.app')
-
-        @section('content')
+  
             <div class="container mt-4">
                 <div class="card shadow-sm border-0 p-4">
                     <div class="card-body">
@@ -81,7 +79,7 @@
                     </div>
                 </div>
             </div>
-     
+
 
     @endif
 @endsection
