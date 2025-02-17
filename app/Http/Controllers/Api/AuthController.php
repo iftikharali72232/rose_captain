@@ -164,6 +164,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $messages[$lang]['account_pending'],
+                'status'=>$driver->status,
             ], 404);
         }
 
