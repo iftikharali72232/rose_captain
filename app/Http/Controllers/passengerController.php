@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Models\Passengers;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class passengerController extends Controller
@@ -16,8 +17,16 @@ class passengerController extends Controller
     public function index()
     {
 
-        $passenger = Passengers::all();
-        return view('passenger.index', compact('passenger'));
+    //    $bookings = Booking::withCount('passengers')->get();
+        $bookings = Booking::with('user') // Load user details
+            ->leftJoin('passengers', 'bookings.id', '=', 'passengers.booking_id')
+            ->select('bookings.user_id')
+            ->selectRaw('COUNT(bookings.id) as total_bookings, COUNT(passengers.id) as total_passengers')
+            ->groupBy('bookings.user_id')
+            ->get();
+
+
+        return view('passenger.index', compact('bookings'));
     }
 
     /**
@@ -49,7 +58,11 @@ class passengerController extends Controller
      */
     public function show($id)
     {
-        //
+       $passenger = Passengers::join('bookings','bookings.id','=','passengers.booking_id')
+       ->where('bookings.user_id',$id)->get();
+
+
+        return view('passenger.index', compact('passenger'));
     }
 
     /**

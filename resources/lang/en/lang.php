@@ -104,4 +104,7 @@ return [
     'nationality'   => "Nationality",
     'mobile_no'   => "Mobile No",
     'license_image_url' => "License Image URL",
+    'license_image_url' => "License Image URL",
+    'driver_name' => "Driver",
+    'passengers_count' => "Passengers Count",
 ];

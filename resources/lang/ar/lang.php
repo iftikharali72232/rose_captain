@@ -89,4 +89,6 @@ return [
     'nationality'   => "الجنسية",
     'mobile_no'   => "رقم الجوال",
     'license_image_url' => "رابط صورة الرخصة",
+    'driver_name' => "السائق",
+    'passengers_count' => "عدد الركاب",
 ];
