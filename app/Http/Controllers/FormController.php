@@ -64,7 +64,7 @@ class FormController extends Controller
     public function drivers()
     {
 
-        $drivers = User::where('user_type', 1)->get();
+        $drivers = User::where('user_type', 1)->where('name','!=','guest')->get();
         return view('drivers.index', compact('drivers'));
     }
 

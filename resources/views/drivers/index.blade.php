@@ -17,6 +17,7 @@
                     <th>{{ trans('lang.license_image_url') }}</th>
                     <th>{{ trans('lang.status') }}</th>
                     <th>{{ trans('lang.action') }}</th>
+                    <th>{{ trans('lang.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,6 +57,17 @@
                             @method('PATCH')
                             <button type="submit" class="btn btn-sm {{ $driver->status ? 'btn-danger' : 'btn-success' }}">
                                 {{ $driver->status ? trans('lang.unapprove') : trans('lang.approve') }}
+                            </button>
+                        </form>
+
+
+                    </td>
+                    <td>
+                        <form action="{{ route('users.destroy', $driver->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this driver?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                {{ trans('lang.delete') }}
                             </button>
                         </form>
                     </td>
