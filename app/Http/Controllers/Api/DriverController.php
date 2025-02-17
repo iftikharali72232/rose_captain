@@ -19,6 +19,14 @@ class DriverController extends Controller
     public function store(StoreFormRequest $request)
     {
 
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->where('name','guest')->first();
+   
+        if ($driver):
+            $driver->update([
+                'mobile'=>'guest',
+                'id_number'=>'guest'
+            ]);
+        endif;
         $lang = $request->lang;
         $user = User::where('mobile', $request->mobile)->first();
         if($user)
