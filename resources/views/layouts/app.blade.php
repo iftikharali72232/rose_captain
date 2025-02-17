@@ -54,7 +54,7 @@
           </div>
 
        @include('layouts.penal.nav')
-   {{--    @include('layouts.penal.main_manue')--}}
+       @include('layouts.penal.main_manue')
 
       @endguest
 
