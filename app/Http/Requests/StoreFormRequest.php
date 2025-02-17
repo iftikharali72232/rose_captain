@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -9,7 +10,8 @@ class StoreFormRequest extends FormRequest
 {
     public function rules()
     {
-
+        $driver = User::where('mobile', $this->input('mobile'))->where('user_type', 1)->where('name','guest')->first();
+        if (!$driver):
         return [
             'name' => 'required|string|max:255',
             'mobile' => 'required|string|max:15|unique:users,mobile',
@@ -23,6 +25,9 @@ class StoreFormRequest extends FormRequest
             'company_registration_number' => 'required|string|max:100',
             'company_type' => 'required|string|max:100',
         ];
+        else:
+            return  [];
+        endif;
     }
 
     public function messages()
