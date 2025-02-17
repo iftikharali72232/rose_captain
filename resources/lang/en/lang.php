@@ -107,4 +107,9 @@ return [
     'license_image_url' => "License Image URL",
     'driver_name' => "Driver",
     'passengers_count' => "Passengers Count",
+    'list_count' => "List Count",
+    'booking' => "Booking",
+    'from' => "From",
+    'to' => "To",
+    'vehicle_name' => "Vehicle Name",
 ];

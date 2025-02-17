@@ -91,4 +91,9 @@ return [
     'license_image_url' => "رابط صورة الرخصة",
     'driver_name' => "السائق",
     'passengers_count' => "عدد الركاب",
+    'list_count' => "عدد القوائم",
+    'booking' => "الحجز",
+    'from' => "من",
+    'to' => "إلى",
+    'vehicle_name' => "اسم المركبة",
 ];

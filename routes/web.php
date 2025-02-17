@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
     Route::resource('wallet', WalletController::class);
     Route::resource('passenger', \App\Http\Controllers\passengerController::class);
+    Route::get('detaild/{id}', [\App\Http\Controllers\passengerController::class,'detaild'])->name('passenger.detaild');
 
     Route::get('car-types', [CarTypeController::class, 'index'])->name('car_types.index');
     Route::get('car-types/create', [CarTypeController::class, 'create'])->name('car_types.create');

@@ -58,8 +58,16 @@ class passengerController extends Controller
      */
     public function show($id)
     {
-       $passenger = Passengers::join('bookings','bookings.id','=','passengers.booking_id')
-       ->where('bookings.user_id',$id)->get();
+      /* $passenger = Passengers::join('bookings','bookings.id','=','passengers.booking_id')
+       ->where('bookings.user_id',$id)->get();*/
+        $bookings_detail = Booking::withCount('passengers')->where('user_id',$id)->get();
+
+        return view('passenger.index', compact('bookings_detail'));
+    }
+
+    public function detaild($id)
+    {
+       $passenger = Booking::with(['user','passengers','user.vehicles'])->where('id',$id)->first();
 
 
         return view('passenger.index', compact('passenger'));
