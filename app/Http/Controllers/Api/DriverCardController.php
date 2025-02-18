@@ -15,7 +15,7 @@ class DriverCardController extends Controller
      */
     public function index()
     {
-        $drivers = DriverCard::all();
+        $drivers = DriverCard::where('user_id',Auth::id())->get();
         return response()->json(['status' => 'success', 'drivers' => $drivers]);
     }
 
@@ -44,6 +44,10 @@ class DriverCardController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
+        if (DriverCard::where('user_id', Auth::id())->exists())
+        {
+            return response()->json(['status' => 'error', 'message' => 'You are already registered.'], 400);
+        }
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('driversCard', 'public');
             $validated['image'] = $imagePath;
