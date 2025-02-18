@@ -89,6 +89,7 @@
             <tr>
                 <th colspan="2">{{ trans('lang.driver_name') }}: {{ $passenger->user->name ?? 'N/A' }}</th>
                 <th colspan="2">{{ trans('lang.vehicle_name') }}: {{ $passenger->user->vehicles->first()->car_type ?? 'N/A' }}</th>
+                <th colspan="2">{{ trans('lang.company_name') }}: {{ $passenger->user->company->first()->company_name ?? 'N/A' }}</th>
 
             </tr>
                 <tr>

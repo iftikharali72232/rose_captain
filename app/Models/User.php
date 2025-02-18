@@ -92,6 +92,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Vehicle::class);
     }
+    public function company()
+    {
+        return $this->hasMany(Company::class);
+    }
 
     public static function sendNotification($data)
     {
