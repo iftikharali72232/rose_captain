@@ -1,6 +1,7 @@
 @extends('layouts.app')
-
 @section('content')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     @if(isset($bookings))
 
@@ -81,7 +82,8 @@
     <h2 class="fw-bold mb-6">{{ trans('lang.passengers_list') }}</h2>
     <hr>
     <div class="table-responsive">
-        <table class="table">
+        <button onclick="downloadPDF()">Download PDF</button>
+        <table class="table" id="pdfTable">
             <thead>
 
             <tr>
@@ -114,4 +116,23 @@
     </div>
 </div>
     @endif
+
+    <script>
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const table = document.getElementById("pdfTable");
+
+            // Convert HTML table to canvas
+            html2canvas(table).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const imgWidth = 190; // Adjust width
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                doc.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+                doc.save("passenger_list.pdf");
+            });
+        }
+    </script>
 @endsection
