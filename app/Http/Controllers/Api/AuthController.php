@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\User as Users;
 use Illuminate\Http\Request;
 use App\Models\Driver;
 use App\Models\User;
@@ -219,6 +220,64 @@ class AuthController extends Controller
     }
     public function updateProfile(Request $request)
     {
+        if ($request->verify == 'false'):
+            try {
+
+                $mobile =  Auth::user()->mobile;
+
+
+                $driver = new Users();
+                $driver = $driver->find(Auth::id());
+
+
+                $otp = mt_rand(1000, 9999);
+
+                $driver->otp = $otp;
+                //    $driver->mobile = $request->mobile;
+                $driver->otp_expires_at = now()->addMinutes(10);
+                $driver->save();
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . config('services.taqnyat.bearer_token'),
+                    'Content-Type' => 'application/json',
+                ])->post(config('services.taqnyat.url'), [
+                    'sender' => config('services.taqnyat.sender'),
+                    'recipients' => [$mobile],
+                    'body' => "Your OTP code is: $otp\nValid for 10 minutes"
+                ]);
+
+                if (!$response->successful()) {
+                    Log::error('Taqnyat SMS Failed', ['response' => $response->body()]);
+                }
+            } catch (\Exception $e) {
+                Log::info('Taqnyat URL', ['url' => config('services.taqnyat.url')]);
+                Log::error('SMS Send Error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+            }
+            $lang = $request->lang ?? 'en';
+            $messages = [
+                'en' => [
+                    'invalid_input' => 'Invalid input.',
+                    'driver_not_found' => 'Driver not found.',
+                    'account_pending' => 'Please wait until your account is approved.',
+                    'otp_sent' => 'OTP sent to your mobile number.',
+                ],
+                'ar' => [
+                    'invalid_input' => 'إدخال غير صالح.',
+                    'driver_not_found' => 'لم يتم العثور على السائق.',
+                    'account_pending' => 'يرجى الانتظار حتى تتم الموافقة على حسابك.',
+                    'otp_sent' => 'تم إرسال رمز OTP إلى رقم جوالك.',
+                ]
+            ];
+            return response()->json([
+                'success' => true,
+                'user' => $driver,
+                'otp'=>$otp,
+                'message' => $messages[$lang]['otp_sent'],
+            ], 200);
+        endif;
+
         $user = $request->user(); // Get authenticated user
 
         // Validate the request without requiring 'id'
