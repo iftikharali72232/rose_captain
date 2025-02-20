@@ -68,11 +68,22 @@ class SubscritionController extends Controller
         $user_id = Auth::id();
 
 
-        $subscription = Subscription::where('user_id', $user_id)
-            ->where('subscription_type',$id)
-            ->whereDate('from_date', '<=', Carbon::today())
-            ->whereDate('to_date', '>=', Carbon::today())
-            ->first();
+
+        if ($id == 'all'):
+            $subscription = Subscription::where('user_id',Auth::id())
+
+                ->whereDate('from_date', '<=', Carbon::today())
+                ->whereDate('to_date', '>=', Carbon::today())
+                ->get();
+
+        else:
+            $subscription = Subscription::
+            where('subscription_type',$id)
+                ->whereDate('from_date', '<=', Carbon::today())
+                ->whereDate('to_date', '>=', Carbon::today())
+                ->get();
+
+        endif;
 
         if (!$subscription) {
 
@@ -83,6 +94,29 @@ class SubscritionController extends Controller
 
         return response()->json(['subscription' => $subscription]);
     }
+
+    public function detaild()
+    {
+        dd('sa');
+        $user_id = Auth::id();
+
+
+        $subscription = Subscription::where('user_id',$id)
+        ->where('subscription_type',$id)
+            ->whereDate('from_date', '<=', Carbon::today())
+            ->whereDate('to_date', '>=', Carbon::today())
+            ->get();
+
+        if (!$subscription) {
+
+            return response()->json(['message' => 'No active subscription found',
+                'data'=>false], 404);
+        }
+
+
+        return response()->json(['subscription' => $subscription]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
