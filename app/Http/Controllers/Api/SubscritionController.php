@@ -75,12 +75,24 @@ class SubscritionController extends Controller
                 ->whereDate('from_date', '<=', Carbon::today())
                 ->whereDate('to_date', '>=', Carbon::today())
                 ->get();
+         elseIf($id == 'booking_plans'):
+             $subscription = Subscription::
+                  where('subscription_type','booking_plans')
+                  ->where('user_id',0)
+                 ->select('subscription_type','amount','duration_type')
+                 ->get();
 
+        elseIf($id == 'driver_card_plans'):
+            $subscription = Subscription::
+            where('subscription_type','driver_card_plans')
+                ->where('user_id',0)
+                ->select('subscription_type','amount','duration_type')
+                ->get();
         else:
             $subscription = Subscription::
             where('subscription_type',$id)
-                ->whereDate('from_date', '<=', Carbon::today())
-                ->whereDate('to_date', '>=', Carbon::today())
+          /*      ->whereDate('from_date', '<=', Carbon::today())
+                ->whereDate('to_date', '>=', Carbon::today())*/
                 ->get();
 
         endif;
