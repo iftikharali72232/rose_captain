@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Passengers;
+use App\Models\Subscription;
 use Auth;
+use Carbon\Carbon;
 class BookingController extends Controller
 {
     /**
@@ -54,7 +56,17 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+       /*$user_id =Auth::id();
+        $subscription = Subscription::where('user_id', $user_id)
+            ->where('subscription_type','booking')
+            ->whereDate('from_date', '<=', Carbon::today())
+            ->whereDate('to_date', '>=', Carbon::today())
+            ->first();
 
+        if (!$subscription) {
+            // Subscription not found, handle accordingly
+            return response()->json(['message' => 'No active subscription found'], 404);
+        }*/
         // Validate the request
         $validated = $request->validate([
             'from' => 'required|string',

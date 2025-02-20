@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->after('id');
-        });
+
+        if (!Schema::hasColumn('bookings', 'user_id')) {
+            Schema::table('bookings', function (Blueprint $table) {
+                $table->foreignId('user_id')->constrained()->after('id');
+            });
+        }
     }
 
     /**
