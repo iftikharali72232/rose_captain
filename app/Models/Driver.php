@@ -14,8 +14,9 @@ class Driver extends Authenticatable
 
     public function vehicle()
     {
-        return $this->hasOne(Vehicle::class);
+        return $this->hasOne(Vehicle::class, 'user_id', 'id');
     }
+
 
     public function company()
     {

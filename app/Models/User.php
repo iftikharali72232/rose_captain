@@ -54,10 +54,10 @@ class User extends Authenticatable
         return $this->id_image ? Storage::disk('public')->url($this->id_image) : null;
     }
 
-  /*  public function getDriverImageAttribute()
-    {
-        return $this->driver_image ? Storage::disk('public')->url($this->driver_image) : null;
-    }*/
+    /*  public function getDriverImageAttribute()
+      {
+          return $this->driver_image ? Storage::disk('public')->url($this->driver_image) : null;
+      }*/
 
 
     /**
@@ -88,14 +88,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
-    public function vehicles()
+    public function vehicle()
     {
-        return $this->hasMany(Vehicle::class);
+        return $this->hasOne(Vehicle::class, 'user_id');
     }
+
     public function company()
     {
-        return $this->hasMany(Company::class);
+        return $this->hasOne(Company::class, 'user_id');
     }
+
 
     public static function sendNotification($data)
     {

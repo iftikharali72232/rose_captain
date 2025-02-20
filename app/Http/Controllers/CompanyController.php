@@ -85,6 +85,14 @@ class CompanyController extends Controller
         return redirect()->route('companies.index')->with('success', 'Company updated successfully.');
     }
 
+    // Show a specific company
+    public function show($id)
+    {
+        $company = Company::findOrFail($id); // Fetch company or return 404
+        return view('companies.show', compact('company'));
+    }
+
+
     // Remove the specified company from the database
     public function destroy(Company $company)
     {

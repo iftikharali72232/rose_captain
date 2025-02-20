@@ -43,12 +43,16 @@
                     <span class="badge bg-primary badge-number bg-success">{{ $new_users->count() }}</span>
                 </a>
 
-                <ul class="dropdown-menu {{ app()->isLocale('ar') ? 'dropdown-menu-start' : 'dropdown-menu-end' }} dropdown-menu-arrow notifications">
+                <ul
+                    class="dropdown-menu {{ app()->isLocale('ar') ? 'dropdown-menu-start' : 'dropdown-menu-end' }} dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
                         {{ trans('lang.you_have') }} {{ $new_users->count() }} {{ trans('lang.new_notifications') }}
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">{{ trans('lang.read_all') }}</span></a>
+                        <a href="#"><span
+                                class="badge rounded-pill bg-primary p-2 ms-2">{{ trans('lang.read_all') }}</span></a>
                     </li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
                     @forelse($new_users as $user)
                         <li class="notification-item">
@@ -61,7 +65,9 @@
                                 </div>
                             </a>
                         </li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                     @empty
                         <li class="dropdown-footer">
                             <p class="text-center">{{ trans('lang.no_new_notifications') }}</p>
@@ -73,7 +79,7 @@
 
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
+                onclick="event.preventDefault();
                document.getElementById('logout-form').submit();">
                 {{ trans('lang.logout') }}
             </a>

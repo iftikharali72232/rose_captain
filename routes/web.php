@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Http\Controllers\CarTypeController;
@@ -36,13 +35,14 @@ Route::get('/outh', function () {
     return view('outh');
 });
 Auth::routes();
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('users', User::class);
-
+    Route::get('/company/{company}', [CompanyController::class, 'show'])->name('company.show');
     Route::resource('companies', CompanyController::class);
 
     Route::resource('vehicles', VehicleController::class);
+    Route::get('vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
 
     Route::get('/form', [FormController::class, 'create'])->name('form.create');
     Route::post('/form', [FormController::class, 'store'])->name('form.store');
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
     Route::resource('wallet', WalletController::class);
     Route::resource('passenger', \App\Http\Controllers\passengerController::class);
-    Route::get('detaild/{id}', [\App\Http\Controllers\passengerController::class,'detaild'])->name('passenger.detaild');
+    Route::get('detaild/{id}', [\App\Http\Controllers\passengerController::class, 'detaild'])->name('passenger.detaild');
 
     Route::get('car-types', [CarTypeController::class, 'index'])->name('car_types.index');
     Route::get('car-types/create', [CarTypeController::class, 'create'])->name('car_types.create');

@@ -16,24 +16,30 @@ class DriverController extends Controller
     {
 
     }
+
+    public function index()
+    {
+        $drivers = User::where('user_type', 1)->with(['company', 'vehicle'])->get();
+        return view('drivers.index', compact('drivers'));
+    }
+
     public function store(StoreFormRequest $request)
     {
 
-        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->where('name','guest')->first();
-   
+        $driver = User::where('mobile', $request->mobile)->where('user_type', 1)->where('name', 'guest')->first();
+
         if ($driver):
             $driver->update([
-                'mobile'=>'guest',
-                'id_number'=>'guest'
+                'mobile' => 'guest',
+                'id_number' => 'guest'
             ]);
         endif;
         $lang = $request->lang;
         $user = User::where('mobile', $request->mobile)->first();
-        if($user)
-        {
+        if ($user) {
             return response()->json([
                 'success' => false,
-                'message' =>    $lang == "en" ?  'Mobile Number already exists.' : "رقم الجوال موجود بالفعل.",
+                'message' => $lang == "en" ? 'Mobile Number already exists.' : "رقم الجوال موجود بالفعل.",
             ], 404);
         }
         DB::beginTransaction();
@@ -91,10 +97,10 @@ class DriverController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $lang == "en" ?  'Driver registration successful' : "تم تسجيل السائق بنجاح.",
+                'message' => $lang == "en" ? 'Driver registration successful' : "تم تسجيل السائق بنجاح.",
                 'data' => [
                     'driver' => $user->append(['id_image_url', 'license_image_url']),
-                    'driver_image'=>$user->driver_image,
+                    'driver_image' => $user->driver_image,
                     'vehicle' => $vehicle->append(['car_image_url']),
                     'company' => $company,
                 ],

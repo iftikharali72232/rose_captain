@@ -23,6 +23,12 @@ class VehicleController extends Controller
         return view('vehicles.create', compact('users', 'companies'));
     }
 
+    public function show($id)
+    {
+        $vehicle = Vehicle::findOrFail($id);
+        return view('vehicles.show', compact('vehicle'));
+    }
+
     // Store a newly created vehicle in the database
     public function store(Request $request)
     {
