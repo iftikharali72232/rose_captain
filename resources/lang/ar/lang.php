@@ -82,6 +82,7 @@ return [
     'submit' => 'إرسال',
     'name_ar' => "الاسم العربي",
     'passengers' => "ركاب",
+    'passenger' => "ركاب",
     'id_image' => 'صورة الهوية',
     'passengers_list' => "قائمة الركاب",
     'passenger_name' => "اسم الراكب",
