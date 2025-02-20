@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
+class ComposerStaticInitb5a21dcf85c5026ae53abe3db4944366
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -619,9 +619,13 @@ class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
         'App\\Events\\testWebsocket' => __DIR__ . '/../..' . '/app/Events/testWebsocket.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
+        'App\\Http\\Controllers\\Api\\BookingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/BookingController.php',
         'App\\Http\\Controllers\\Api\\CarTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CarTypeController.php',
         'App\\Http\\Controllers\\Api\\CompanyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CompanyController.php',
+        'App\\Http\\Controllers\\Api\\DriverCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/DriverCardController.php',
         'App\\Http\\Controllers\\Api\\DriverController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/DriverController.php',
+        'App\\Http\\Controllers\\Api\\PrivacyPolicy' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PrivacyPolicy.php',
+        'App\\Http\\Controllers\\Api\\SubscritionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/SubscritionController.php',
         'App\\Http\\Controllers\\Api\\VehicleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/VehicleController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -632,12 +636,14 @@ class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
         'App\\Http\\Controllers\\CarTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/CarTypeController.php',
         'App\\Http\\Controllers\\CompanyController' => __DIR__ . '/../..' . '/app/Http/Controllers/CompanyController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DriverCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DriverCardController.php',
         'App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\LangController' => __DIR__ . '/../..' . '/app/Http/Controllers/LangController.php',
         'App\\Http\\Controllers\\User' => __DIR__ . '/../..' . '/app/Http/Controllers/User.php',
         'App\\Http\\Controllers\\VehicleController' => __DIR__ . '/../..' . '/app/Http/Controllers/VehicleController.php',
         'App\\Http\\Controllers\\WalletController' => __DIR__ . '/../..' . '/app/Http/Controllers/WalletController.php',
+        'App\\Http\\Controllers\\passengerController' => __DIR__ . '/../..' . '/app/Http/Controllers/passengerController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -651,6 +657,7 @@ class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\StoreFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreFormRequest.php',
         'App\\Models\\Bank' => __DIR__ . '/../..' . '/app/Models/Bank.php',
+        'App\\Models\\Booking' => __DIR__ . '/../..' . '/app/Models/Booking.php',
         'App\\Models\\CarType' => __DIR__ . '/../..' . '/app/Models/CarType.php',
         'App\\Models\\CardDetail' => __DIR__ . '/../..' . '/app/Models/CardDetail.php',
         'App\\Models\\Cart' => __DIR__ . '/../..' . '/app/Models/Cart.php',
@@ -659,16 +666,19 @@ class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
         'App\\Models\\City' => __DIR__ . '/../..' . '/app/Models/City.php',
         'App\\Models\\Company' => __DIR__ . '/../..' . '/app/Models/Company.php',
         'App\\Models\\Driver' => __DIR__ . '/../..' . '/app/Models/Driver.php',
+        'App\\Models\\DriverCard' => __DIR__ . '/../..' . '/app/Models/DriverCard.php',
         'App\\Models\\History' => __DIR__ . '/../..' . '/app/Models/History.php',
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
         'App\\Models\\Offer' => __DIR__ . '/../..' . '/app/Models/Offer.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\OrderItem' => __DIR__ . '/../..' . '/app/Models/OrderItem.php',
+        'App\\Models\\Passengers' => __DIR__ . '/../..' . '/app/Models/Passengers.php',
         'App\\Models\\PaymentMethod' => __DIR__ . '/../..' . '/app/Models/PaymentMethod.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Request' => __DIR__ . '/../..' . '/app/Models/Request.php',
         'App\\Models\\Shop' => __DIR__ . '/../..' . '/app/Models/Shop.php',
+        'App\\Models\\Subscription' => __DIR__ . '/../..' . '/app/Models/Subscription.php',
         'App\\Models\\Trip' => __DIR__ . '/../..' . '/app/Models/Trip.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Vehicle' => __DIR__ . '/../..' . '/app/Models/Vehicle.php',
@@ -6311,9 +6321,9 @@ class ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdd5322a36cfabf0126a6dcf9fd2ba4d4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb5a21dcf85c5026ae53abe3db4944366::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb5a21dcf85c5026ae53abe3db4944366::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb5a21dcf85c5026ae53abe3db4944366::$classMap;
 
         }, null, ClassLoader::class);
     }
