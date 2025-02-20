@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
 use Carbon\Carbon;
+use Exception;
 class SubscritionController extends Controller
 {
     /**
@@ -37,17 +38,23 @@ class SubscritionController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        try {
+            $validated = $request->validate([
+                'subscription_type' => 'required',
+                'from_date' => 'required|date',
+                'to_date' => 'required|date|after:from_date',
+                'amount' => 'required|numeric|min:0'
+            ]);
 
-            'subscription_type' => 'required',
-            'from_date' => 'required|date',
-            'to_date' => 'required|date|after:from_date',
-            'amount' => 'required|numeric|min:0'
-        ]);
+            $validated['user_id'] = Auth::id();
+            $subscription = Subscription::create($validated);
 
-        $validated['user_id'] = Auth::id();
-        $subscription = Subscription::create($validated);
-        return response()->json(['message' => 'Subscription created', 'data' => $subscription], 201);
+            return response()->json(['message' => 'Subscription created', 'data' => $subscription], 201);
+
+        } catch (Exception $e) {
+            Log::error('Subscription API Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Something went wrong', 'details' => $e->getMessage()], 500);
+        }
     }
 
     /**
