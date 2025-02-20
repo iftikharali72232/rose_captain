@@ -76,7 +76,8 @@ class SubscritionController extends Controller
 
         if (!$subscription) {
 
-            return response()->json(['message' => 'No active subscription found'], 404);
+            return response()->json(['message' => 'No active subscription found',
+                'data'=>false], 404);
         }
 
 

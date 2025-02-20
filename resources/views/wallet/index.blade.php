@@ -18,7 +18,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title"></h5>
-          
+
           @if ($message = Session::get('success'))
           <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -30,9 +30,9 @@
               <th>{{ trans('lang.number') }}</th>
               <th>{{ trans('lang.name') }}</th>
               <th>{{ trans('lang.wallet_amount') }}</th>
-              <th>{{ trans('lang.user_type') }}</th>
+              <th>{{ trans('lang.user_type')?? ''  }}</th>
               <th>{{ trans('lang.status') }}</th>
-              <th width="280px">{{ trans('lang.action') }}</th>
+            {{--  <th width="280px">{{ trans('lang.action') }}</th>--}}
             </tr>
             @php
               $page = $_GET['page'] ?? 1;
@@ -44,18 +44,16 @@
             @endphp
             <tr>
               <td>{{ ++$i }}</td>
-              <td>{{ $user->name }}</td>
+              <td>{{ $user->name ?? '' }}</td>
               <td>{{ $wallet->amount }}</td>
-              <td>
-                {{ $user->user_type == 0 ? trans('lang.admin') : ($user->user_type == 1 ? trans('lang.seller') : trans('lang.buyer')) }}
-              </td>
-              <td>
-                @if($user->status == 0)
-                  <a class="btn btn-warning text-center">{{ trans('lang.deactive') }}</a>
+                @if(isset($user) && $user->user_type !== null)
+                    <td>
+                        {{ $user->user_type == 0 ? trans('lang.admin') : ($user->user_type == 1 ? trans('lang.driver_name') : trans('lang.buyer')) }}
+                    </td>
                 @else
-                  <a class="btn btn-success text-center">{{ trans('lang.active') }}</a>
+                    <td>{{ trans('lang.unknown') }}</td>  {{-- Fallback if user is null --}}
                 @endif
-              </td>
+
               <td>
                 <a class="btn btn-primary" href="{{ route('wallet.edit', $wallet->id) }}">{{ trans('lang.update_wallet') }}</a>
               </td>

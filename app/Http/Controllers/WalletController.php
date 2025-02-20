@@ -14,7 +14,7 @@ class WalletController extends Controller
     public function index()
     {
         $data['perPage'] = 10;
-        $data['wallets'] = Wallet::orderByDesc('id')->paginate($data['perPage']);
+        $data['wallets'] = Wallet::whereHas('user')->orderByDesc('id')->paginate($data['perPage']);
         return view('wallet.index', $data);
     }
 
@@ -29,7 +29,7 @@ class WalletController extends Controller
     {
         $amount = doubleval($request->input('amount'));
         $wallet = Wallet::find($id);
-        $user = Driver::find($wallet->user_id);
+        $user = User::find($wallet->user_id);
 
         if ($request->has('recharge') && $request->input('recharge') == 1) {
             $newAmount = $amount + $wallet->amount;

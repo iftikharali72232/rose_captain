@@ -112,4 +112,7 @@ return [
     'from' => "From",
     'to' => "To",
     'vehicle_name' => "Vehicle Name",
+    'recharge' => "Recharge",
+    'back' => "Back",
+    'withdraw' => "Withdraw",
 ];
