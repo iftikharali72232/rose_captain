@@ -40,14 +40,31 @@ class SubscritionController extends Controller
     {
         try {
             $validated = $request->validate([
-                'subscription_type' => 'required',
-                'from_date' => 'required|date',
-                'to_date' => 'required|date|after:from_date',
-                'amount' => 'required|numeric|min:0'
+                'subscription_id' => 'required|exists:subscriptions,id',
             ]);
 
-            $validated['user_id'] = Auth::id();
-            $subscription = Subscription::create($validated);
+           $data  =  Subscription::find($request->subscription_id);
+            $subscription = new Subscription();
+            $subscription->user_id = Auth::id();
+            $subscription->subscription_type = ($data->subscription_type == 'booking_plans') ? 'booking' : 'driver_card';
+
+            if ($data->duration_type == 'monthly') {
+                $from_date = now()->format('Y-m-d'); // Today
+                $day = now()->format('d'); // Current day
+                $to_date = now()->addMonth()->format('Y-m-') . min($day, now()->addMonth()->daysInMonth); // Next month
+
+            } else {
+                // Default values (Modify as needed)
+                $from_date = now()->format('Y-m-d');
+                $to_date = now()->addDays(30)->format('Y-m-d'); // Default 30 days
+            }
+
+            $subscription->from_date = $from_date;
+            $subscription->to_date = $to_date;
+            $subscription->amount = $data->amount;
+            $subscription->subscription_id = $data->id;
+            $subscription->save();
+
 
             return response()->json(['message' => 'Subscription created', 'data' => $subscription], 201);
 
@@ -69,24 +86,46 @@ class SubscritionController extends Controller
 
 
 
-        if ($id == 'all'):
+        if ($id == 'booking'):
             $subscription = Subscription::where('user_id',Auth::id())
-
+                ->where('subscription_type',$id)
                 ->whereDate('from_date', '<=', Carbon::today())
                 ->whereDate('to_date', '>=', Carbon::today())
-                ->get();
+                ->first();
+          if ($subscription):
+              $subscription = 1;
+              return response()->json(['subscription' => $subscription]);
+              else:
+                  $subscription = 0;
+                  return response()->json(['subscription' => $subscription]);
+          endif;
+
+            elseif ($id == 'driver_card'):
+                $subscription = Subscription::where('user_id',Auth::id())
+                    ->where('subscription_type',$id)
+                    ->whereDate('from_date', '<=', Carbon::today())
+                    ->whereDate('to_date', '>=', Carbon::today())
+                    ->first();
+                if ($subscription):
+                    $subscription = 1;
+                    return response()->json(['subscription' => $subscription]);
+                else:
+                    $subscription = 0;
+                    return response()->json(['subscription' => $subscription]);
+                endif;
+
          elseIf($id == 'booking_plans'):
              $subscription = Subscription::
                   where('subscription_type','booking_plans')
                   ->where('user_id',0)
-                 ->select('subscription_type','amount','duration_type')
+                 ->select('id','subscription_type','amount','duration_type')
                  ->get();
 
         elseIf($id == 'driver_card_plans'):
             $subscription = Subscription::
             where('subscription_type','driver_card_plans')
                 ->where('user_id',0)
-                ->select('subscription_type','amount','duration_type')
+                ->select('id','subscription_type','amount','duration_type')
                 ->get();
         else:
             $subscription = Subscription::
