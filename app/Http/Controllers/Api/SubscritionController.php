@@ -114,6 +114,20 @@ class SubscritionController extends Controller
                     return response()->json(['subscription' => $subscription]);
                 endif;
 
+        elseif ($id == 'all'):
+            $subscription = Subscription::where('user_id',Auth::id())
+              
+                ->whereDate('from_date', '<=', Carbon::today())
+                ->whereDate('to_date', '>=', Carbon::today())
+                ->get();
+            if ($subscription):
+
+                return response()->json(['subscription' => $subscription]);
+            else:
+                $subscription = 0;
+                return response()->json(['subscription' => $subscription]);
+            endif;
+
          elseIf($id == 'booking_plans'):
              $subscription = Subscription::
                   where('subscription_type','booking_plans')
