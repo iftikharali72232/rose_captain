@@ -44,6 +44,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
 
     Route::resource('booking',\App\Http\Controllers\Api\BookingController::class);
+    Route::resource('wallet',\App\Http\Controllers\Api\WalletController::class);
     Route::resource('subscription',\App\Http\Controllers\Api\SubscritionController::class);
     Route::resource('driver_card',\App\Http\Controllers\Api\DriverCardController::class);
 
