@@ -65,7 +65,7 @@ class WalletController extends Controller
                 $id = $user_data->id;
                 endif;
             $wallet =  new Wallet();
-            if ($user_data != 0):
+            if ($id != 0):
             $wallet = Wallet::findOrFail($id);
             endif;
 
