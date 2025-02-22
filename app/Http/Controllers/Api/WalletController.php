@@ -8,6 +8,8 @@ use App\Models\Wallet;
 use App\Models\User;
 use App\Models\WalletHistory;
 use Auth;
+use Illuminate\Support\Facades\Log;
+
 class WalletController extends Controller
 {
     /**
@@ -51,6 +53,14 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('transfer')):
+        $user_data_another = User::where('mobile',$request->mobile_no)->first();
+        if (!$user_data_another):
+            return response()->json(['error' => 'user not found'], 500);
+        endif;
+     endif;
+
+
         try {
             $validated = $request->validate([
                 'amount' => 'required|numeric',
@@ -61,6 +71,8 @@ class WalletController extends Controller
             $id = 0;
             $user_data = Wallet::where('user_id',$user_id)->first();
 
+            $user_info = User::find(Auth::id());
+
             if ($user_data):
                 $id = $user_data->id;
                 endif;
@@ -70,15 +82,69 @@ class WalletController extends Controller
             endif;
 
             $wallet->user_id = Auth::id();
-            $wallet->amount += $request->amount;
+            $deposit = 1;
+            if ($request->has('transfer'))
+            {
+
+
+                if ($user_data->amount < $request->amount)
+                {
+                    return response()->json(['error' => 'Insufficient amount'], 500);
+                }
+                else
+                {
+
+                    $wallet->amount -= $request->amount;
+
+                    $deposit = 0;
+                }
+            }
+            else
+            {
+                $wallet->amount += $request->amount;
+            }
+
             $wallet->save();
 
             // Save transaction history
             WalletHistory::create([
                 'wallet_id' => $wallet->id,
                 'amount' => $request->amount,
+                'is_deposite' => 1,
                 'description' => $request->description,
             ]);
+
+
+            if ($request->has('transfer')):
+                $user_data = Wallet::where('user_id',$user_data_another->id)->first();
+                $id = 0;
+                if ($user_data):
+                    $id = $user_data->id;
+                endif;
+
+                $wallet =  new Wallet();
+                if ($id != 0):
+                    $wallet = Wallet::findOrFail($id);
+                endif;
+
+                $wallet->user_id = $user_data_another->id;
+                $deposit = 1;
+                $wallet->amount += $request->amount;
+                $wallet->save();
+
+
+                WalletHistory::create([
+                    'wallet_id' => $wallet->id,
+                    'amount' => $request->amount,
+                    'is_deposite' => 1,
+                    'description' => "Transferd From ".$user_info->name,
+                ]);
+                return response()->json([
+                    'message' => 'Amount Transferd successfully',
+                    'wallet' => $wallet,
+                ], 200);
+            endif;
+
 
             return response()->json([
                 'message' => 'Wallet updated successfully',

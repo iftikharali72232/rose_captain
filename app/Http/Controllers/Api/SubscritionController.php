@@ -52,6 +52,19 @@ class SubscritionController extends Controller
            $data  =  Subscription::find($request->subscription_id);
 
 
+            $subscription = Subscription::where('user_id',Auth::id())
+                ->where('subscription_id',$data->id)
+                ->whereDate('from_date', '<=', Carbon::today())
+                ->whereDate('to_date', '>=', Carbon::today())
+                ->first();
+
+            if ($subscription):
+
+                return response()->json(['error' => 'Subscription Already Exists', 'data' => 'false'], 500);
+
+                endif;
+
+
             $user_data = Wallet::where('user_id',Auth::id())->first();
             if ($user_data->amount < $data->amount)
             {
