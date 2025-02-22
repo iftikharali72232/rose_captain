@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Wallet;
+use App\Models\WalletHistory;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
+
 class SubscritionController extends Controller
 {
     /**
@@ -38,14 +42,29 @@ class SubscritionController extends Controller
      */
     public function store(Request $request)
     {
+
         try {
             $validated = $request->validate([
                 'subscription_id' => 'required|exists:subscriptions,id',
             ]);
 
            $data  =  Subscription::find($request->subscription_id);
+
+
+            $user_data = Wallet::where('user_id',Auth::id())->first();
+            if ($user_data->amount < $data->amount)
+            {
+                return response()->json(['error' => 'Insufficient amount'], 500);
+            }
+
             $subscription = new Subscription();
             $subscription->user_id = Auth::id();
+            $subscription->wallet_id = $request->wallet_id;
+
+
+
+
+
             $subscription->subscription_type = ($data->subscription_type == 'booking_plans') ? 'booking' : 'driver_card';
 
             if ($data->duration_type == 'monthly') {
@@ -64,6 +83,21 @@ class SubscritionController extends Controller
             $subscription->amount = $data->amount;
             $subscription->subscription_id = $data->id;
             $subscription->save();
+
+
+
+            $wallet = new Wallet();
+            $wallet = $wallet->find($request->wallet_id);
+            $wallet->amount -= $subscription->amount;
+            $wallet->save();
+
+
+            WalletHistory::create([
+                'wallet_id' => $wallet->id,
+                'amount' => $subscription->amount,
+                'is_deposite' => 0,
+                'description' => 'Subscription '.$subscription->subscription_type,
+            ]);
 
 
             return response()->json(['message' => 'Subscription created', 'data' => $subscription], 201);
@@ -116,7 +150,7 @@ class SubscritionController extends Controller
 
         elseif ($id == 'all'):
             $subscription = Subscription::where('user_id',Auth::id())
-              
+
                 ->whereDate('from_date', '<=', Carbon::today())
                 ->whereDate('to_date', '>=', Carbon::today())
                 ->get();
