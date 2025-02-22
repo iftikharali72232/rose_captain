@@ -43,6 +43,7 @@ class SubscritionController extends Controller
     public function store(Request $request)
     {
 
+
         try {
             $validated = $request->validate([
                 'subscription_id' => 'required|exists:subscriptions,id',
