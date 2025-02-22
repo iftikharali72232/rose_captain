@@ -15,11 +15,35 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
+
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'mobile' => 'required|string|max:15|unique:users,mobile',
+            'gender' => 'required',
+            'city' => 'required|string|max:100',
+        ]);
+
+        // Create user
+        $validatedData['user_type']  =2;
+        $validatedData['status']  =1;
+        $user = User::create($validatedData);
+
+        // Return response
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully',
+            'data' => $user
+        ], 201);
 
     }
     public function login(Request $request)
