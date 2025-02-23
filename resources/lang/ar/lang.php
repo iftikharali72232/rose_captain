@@ -126,8 +126,8 @@ return [
     "amount" => "المبلغ",
     "city" => "المدينة",
     "gender" => "الجنس",
-    "customer" => "العميل",
-    "customer_lis" => "قائمة العملاء",
+    "customer" => "العملاء",
+    "customer_list" => "قائمة العملاء",
 
 
 ];
