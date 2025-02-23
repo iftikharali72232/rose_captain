@@ -95,6 +95,7 @@ return [
     'from' => "من",
     'to' => "إلى",
     'vehicle_name' => "اسم المركبة",
+
     "company" => "شركة",
     "vehicle" => "عربة    ",
     'view_company' => 'عرض الشركة',
@@ -112,6 +113,21 @@ return [
     "created_at" => "تاريخ الإنشاء",
     "back_to_companies" => "العودة إلى الشركات",
     "no_image_available" => "لا توجد صورة متاحة",
-    "inactive" => "غير نشط"
+    "inactive" => "غير نشط",
+
+    'recharge' => " إعادة الشحن",
+    'back' => "رجوع",
+    'withdraw' => "سحب",
+     "subscription_list_ar" => "قائمة الاشتراكات",
+    "subscription" => "الاشتراك",
+    "from_date_ar" => "من التاريخ",
+    "to_date" => "إلى التاريخ",
+    "booking_type" => "نوع الحجز",
+    "amount" => "المبلغ",
+    "city" => "المدينة",
+    "gender" => "الجنس",
+    "customer" => "العميل",
+    "customer_lis" => "قائمة العملاء",
+
 
 ];
