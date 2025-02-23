@@ -38,7 +38,8 @@ class User extends Authenticatable
         'bank_account',
         'device_token',
         'is_available',
-        'driver_image'
+        'driver_image',
+        'city'
     ];
 
     // Correct method name
