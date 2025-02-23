@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class User extends Controller
 {
     // List all users
-    public function index()
+    public function index(Request $request)
     {
 
         $users = ModelsUser::all();
@@ -86,5 +86,7 @@ class User extends Controller
         $user->delete();
         return redirect()->route('drivers.index')->with('success', 'User deleted successfully.');
     }
+
+
 
 }

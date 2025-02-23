@@ -75,6 +75,38 @@
             </ul>
         </li>
 
+
+        <li class="nav-item">
+            <a class="nav-link collapsed {{ Route::currentRouteName() == 'customer.index' ? 'addBg' : '' }}"
+               data-bs-target="#customer" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-sliders"></i><span>{{ trans('lang.customer') }}</span><i
+                    class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
+            </a>
+            <ul id="customer" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('customers.index') }}">
+                        <i class="bi bi-circle"></i><span>{{ trans('lang.customer_list') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed {{ Route::currentRouteName() == 'subscription.index' ? 'addBg' : '' }}"
+               data-bs-target="#subscription" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-sliders"></i><span>{{ trans('lang.subscription') }}</span><i
+                    class="bi bi-chevron-down {{ app()->getLocale() == 'en' ? 'ms-auto' : 'me-auto' }}"></i>
+            </a>
+            <ul id="subscription" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('subscription.index') }}">
+                        <i class="bi bi-circle"></i><span>{{ trans('lang.subscription_list') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link collapsed {{ Route::currentRouteName() == 'car_types.index' ? 'addBg' : '' }}"
                 data-bs-target="#car_type" data-bs-toggle="collapse" href="#">

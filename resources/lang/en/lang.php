@@ -127,6 +127,16 @@ return [
     "no_image_available" => "No Image Available",
     "inactive" => "Inactive",
     "passenger" => "Passenger",
-    "passenger_list" => "Passenger List"
+    "passenger_list" => "Passenger List",
+    "subscription_list" => "Subscription List",
+    "subscription" => "Subscription",
+    "from_date" => "From Date",
+    "to_date" => "To Date",
+    "booking_type" => "Booking Type",
+    "amount" => "Amount",
+    "city" => "City",
+    "gender" => "Gender",
+    "customer" => "Customer",
+    "customer_list" => "Customer List",
 
 ];

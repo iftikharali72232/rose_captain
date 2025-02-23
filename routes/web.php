@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/companies', [FormController::class, 'companies'])->name('companies.index');
     Route::patch('/drivers/{id}/update-status', [User::class, 'updateStatus'])->name('drivers.update_status');
     Route::resource('wallet', WalletController::class);
+    Route::resource('subscription', SubscriptionController::class);
+    Route::resource('customers', CustomerController::class);
     Route::resource('passenger', \App\Http\Controllers\passengerController::class);
     Route::get('detaild/{id}', [\App\Http\Controllers\passengerController::class, 'detaild'])->name('passenger.detaild');
 
