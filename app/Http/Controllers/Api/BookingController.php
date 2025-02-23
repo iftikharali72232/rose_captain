@@ -33,6 +33,7 @@ class BookingController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Failed to fetch bookings!',
+                'message_ar' => 'فشل في جلب الحجوزات',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -108,6 +109,7 @@ class BookingController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Booking Created Successfully!',
+                'message_ar' => '| تم إنشاء الحجز بنجاح',
                 'booking' => $booking->load('passengers')
             ], 201); // HTTP 201 for resource creation
 
@@ -118,6 +120,7 @@ class BookingController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Booking failed!',
+                'message_ar' => 'فشل في إنشاء الحجز',
                 'error' => $e->getMessage()
             ], 500); // HTTP 500 for internal server error
         }
