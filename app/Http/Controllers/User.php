@@ -81,7 +81,9 @@ class User extends Controller
     // Remove the specified user from the database
     public function destroy(ModelsUser $user)
     {
+        if ($user->vehicles):
         $user->vehicles()->delete();
+        endif;
 
         $user->delete();
         return redirect()->route('drivers.index')->with('success', 'User deleted successfully.');
