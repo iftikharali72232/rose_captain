@@ -21,9 +21,14 @@ use App\Http\Controllers\Api\VehicleController;
 // public routes
 Route::post('/drivers', [DriverController::class, 'store']);
 Route::post('/driver/login', [AuthController::class, 'login']);
+Route::post('/driver/store', [AuthController::class, 'store']);
 Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::get('car-types', [CarTypeController::class, 'index']);
 Route::get('/privacy-policy',[\App\Http\Controllers\Api\PrivacyPolicy::class,'show']);
+
+Route::post('/customers/login',[\App\Http\Controllers\Api\CustomerController::class,'login']);
+Route::post('/customers/otp-verify/',[\App\Http\Controllers\Api\CustomerController::class,'verifyOtp']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -48,5 +53,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::resource('wallet',\App\Http\Controllers\Api\WalletController::class);
     Route::resource('subscription',\App\Http\Controllers\Api\SubscritionController::class);
     Route::resource('driver_card',\App\Http\Controllers\Api\DriverCardController::class);
+    Route::resource('customers',\App\Http\Controllers\Api\CustomerController::class);
+
+
 
 });
