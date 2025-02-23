@@ -110,7 +110,14 @@ class CustomerController extends Controller
     public function login(Request $request)
     {
 
+        $user = User::where('mobile', $request->mobile)->where('user_type', 2)->where('name', 'guest@')->first();
 
+        if ($user):
+            $user->update([
+                'mobile' => 'guest@',
+                'id_number' => 'guest@'
+            ]);
+        endif;
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|string',
         ]);

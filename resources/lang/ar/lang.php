@@ -118,7 +118,7 @@ return [
     'recharge' => " إعادة الشحن",
     'back' => "رجوع",
     'withdraw' => "سحب",
-     "subscription_list_ar" => "قائمة الاشتراكات",
+     "subscription_list" => "قائمة الاشتراكات",
     "subscription" => "الاشتراك",
     "from_date_ar" => "من التاريخ",
     "to_date" => "إلى التاريخ",
