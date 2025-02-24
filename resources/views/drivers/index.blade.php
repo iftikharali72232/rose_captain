@@ -19,6 +19,7 @@
                         <th>{{ trans('lang.action') }}</th>
                         <th>{{ trans('lang.company') }}</th>
                         <th>{{ trans('lang.vehicle') }}</th>
+                        <th>{{ trans('lang.list_count') }}</th>
                         <th>{{ trans('lang.delete') }}</th>
                     </tr>
                 </thead>
@@ -73,6 +74,16 @@
                                 @if ($driver->vehicle)
                                     <a href="{{ route('vehicles.show', ['vehicle' => $driver->vehicle->id]) }}">
                                         {{ trans('lang.view_vehicle') }}
+                                    </a>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </td>
+
+                            <td>
+                                @if ($driver->booking_count)
+                                    <a target="_blank" href="{{ route('passenger.show',$driver->id) }}">
+                                        {{ $driver->booking_count }}
                                     </a>
                                 @else
                                     {{ 'N/A' }}

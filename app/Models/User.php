@@ -105,6 +105,11 @@ class User extends Authenticatable
         return $this->hasOne(Company::class, 'user_id');
     }
 
+    public function booking()
+    {
+        return $this->hasOne(Booking::class, 'user_id');
+    }
+
 
     public static function sendNotification($data)
     {
