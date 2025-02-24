@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rule;
 class CustomerController extends Controller
 {
     /**
@@ -42,7 +42,7 @@ class CustomerController extends Controller
     {
 
         $user = User::where('mobile', $request->mobile)->where('user_type', 2)->where('name', 'guest@')->first();
-     
+
         if ($user):
             $user->update([
                 'mobile' => 'guest@',
@@ -51,9 +51,31 @@ class CustomerController extends Controller
         endif;
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:15|unique:users,mobile',
+            'mobile' => [
+                'required',
+                'string',
+                'max:15',
+                Rule::unique('users', 'mobile')->where(function ($query) {
+                    return $query->where('user_type', 2);
+                }),
+            ],
             'gender' => 'required',
             'city' => 'required|string|max:100',
+        ],[
+            'name.required' => $request->lang === 'ar' ? 'حقل الاسم مطلوب.' : 'The name field is required.',
+            'name.string' => $request->lang === 'ar' ? 'يجب أن يكون الاسم نصًا.' : 'The name must be a string.',
+            'name.max' => $request->lang === 'ar' ? 'يجب ألا يزيد الاسم عن 255 حرفًا.' : 'The name may not be greater than 255 characters.',
+
+            'mobile.required' => $request->lang === 'ar' ? 'حقل رقم الهاتف مطلوب.' : 'The mobile number field is required.',
+            'mobile.string' => $request->lang === 'ar' ? 'يجب أن يكون رقم الهاتف نصًا.' : 'The mobile number must be a string.',
+            'mobile.max' => $request->lang === 'ar' ? 'يجب ألا يزيد رقم الهاتف عن 15 حرفًا.' : 'The mobile number may not be greater than 15 characters.',
+            'mobile.unique' => $request->lang === 'ar' ? 'رقم الهاتف هذا مسجل بالفعل.' : 'This mobile number is already registered.',
+
+            'gender.required' => $request->lang === 'ar' ? 'حقل الجنس مطلوب.' : 'The gender field is required.',
+
+            'city.required' => $request->lang === 'ar' ? 'حقل المدينة مطلوب.' : 'The city field is required.',
+            'city.string' => $request->lang === 'ar' ? 'يجب أن تكون المدينة نصًا.' : 'The city must be a string.',
+            'city.max' => $request->lang === 'ar' ? 'يجب ألا يزيد اسم المدينة عن 100 حرف.' : 'The city may not be greater than 100 characters.',
         ]);
 
         // Create user
