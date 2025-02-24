@@ -53,10 +53,23 @@ class WalletController extends Controller
      */
     public function store(Request $request)
     {
+
+        $lang = $request->input('lang', 'en'); // Default language is English
+
+        $messages = [
+            'amount.required' => $lang === 'ar' ? 'المبلغ مطلوب' : 'Amount is required',
+            'amount.numeric' => $lang === 'ar' ? 'يجب أن يكون المبلغ رقمًا' : 'Amount must be a numeric value',
+
+            'description.required' => $lang === 'ar' ? 'الوصف مطلوب' : 'Description is required',
+            'description.string' => $lang === 'ar' ? 'يجب أن يكون الوصف نصًا' : 'Description must be a string',
+        ];
+
         if ($request->has('transfer')):
         $user_data_another = User::where('mobile',$request->mobile_no)->first();
         if (!$user_data_another):
-            return response()->json(['error' => 'user not found'], 500);
+            return response()->json([
+                'error' => $lang === 'ar' ? 'المستخدم غير موجود' : 'User not found'
+            ], 500);
         endif;
      endif;
 
@@ -65,7 +78,7 @@ class WalletController extends Controller
             $validated = $request->validate([
                 'amount' => 'required|numeric',
                 'description' => 'required|string',
-            ]);
+            ],$messages);
             $user_id = AUth::id();
 
             $id = 0;
@@ -89,7 +102,9 @@ class WalletController extends Controller
 
                 if ($user_data->amount < $request->amount)
                 {
-                    return response()->json(['error' => 'Insufficient amount'], 500);
+                    return response()->json([
+                        'error' => $lang === 'ar' ? 'المبلغ غير كافٍ' : 'Insufficient amount'
+                    ], 500);
                 }
                 else
                 {
@@ -140,14 +155,14 @@ class WalletController extends Controller
                     'description' => "Transferd From ".$user_info->name,
                 ]);
                 return response()->json([
-                    'message' => 'Amount Transferd successfully',
+                    'message' => $lang === 'ar' ? 'تم تحويل المبلغ بنجاح' : 'Amount transferred successfully',
                     'wallet' => $wallet,
                 ], 200);
             endif;
 
 
             return response()->json([
-                'message' => 'Wallet updated successfully',
+                'message' => $lang === 'ar' ? 'تم تحديث المحفظة بنجاح' : 'Wallet updated successfully',
                 'wallet' => $wallet,
             ], 200);
         } catch (Exception $e) {

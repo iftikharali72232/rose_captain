@@ -17,8 +17,11 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+
+        $lang = $request->lang;
 
         try {
             // Retrieve all bookings with passengers
@@ -26,14 +29,13 @@ class BookingController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'bookings' => $bookings
+                'message' => $lang === 'ar' ? 'تم جلب الحجوزات بنجاح' : 'Bookings fetched successfully',
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to fetch bookings!',
-                'message_ar' => 'فشل في جلب الحجوزات',
+                'message' => $lang === 'ar' ? 'فشل في جلب الحجوزات' : 'Failed to fetch bookings!',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -69,6 +71,16 @@ class BookingController extends Controller
             return response()->json(['message' => 'No active subscription found'], 404);
         }*/
         // Validate the request
+
+
+        $lang = $request->input('lang', 'en'); // Default English
+
+        $messages = [
+            'required' => $lang === 'ar' ? 'هذا الحقل مطلوب' : 'This field is required',
+            'array' => $lang === 'ar' ? 'يجب أن يكون هذا الحقل مصفوفة' : 'This field must be an array',
+            'min' => $lang === 'ar' ? 'يجب أن يحتوي على عنصر واحد على الأقل' : 'Must contain at least one item',
+        ];
+
         $validated = $request->validate([
             'from' => 'required|string',
             'to' => 'required|string',
@@ -77,7 +89,7 @@ class BookingController extends Controller
             'passengers.*.name' => 'required|string',
             'passengers.*.nationality' => 'required|string',
             'passengers.*.mobile_number' => 'required|string'
-        ]);
+        ],$messages);
 
         // Start DB Transaction
         DB::beginTransaction();
@@ -92,7 +104,9 @@ class BookingController extends Controller
             ]);
 
             // Insert passengers
-            foreach ($validated['passengers'] as $passenger) {
+            foreach ($validated['passengers'] as $passenger)
+            {
+
                 Passengers::create([
                     'booking_id' => $booking->id,
                     'id_number' => $passenger['id_number'], // Fix id_number spelling

@@ -45,9 +45,16 @@ class SubscritionController extends Controller
 
 
         try {
+            $lang = $request->input('lang', 'en'); // Default language is English
+
+            $messages = [
+                'subscription_id.required' => $lang === 'ar' ? 'معرف الاشتراك مطلوب' : 'Subscription ID is required',
+                'subscription_id.exists' => $lang === 'ar' ? 'معرف الاشتراك غير موجود' : 'Subscription ID does not exist',
+            ];
+
             $validated = $request->validate([
                 'subscription_id' => 'required|exists:subscriptions,id',
-            ]);
+            ], $messages);
 
            $data  =  Subscription::find($request->subscription_id);
 
@@ -60,7 +67,10 @@ class SubscritionController extends Controller
 
             if ($subscription):
 
-                return response()->json(['error' => 'Subscription Already Exists', 'data' => 'false'], 500);
+                return response()->json([
+                    'error' => $lang === 'ar' ? 'الاشتراك موجود بالفعل' : 'Subscription Already Exists',
+                    'data' => 'false'
+                ], 500);
 
                 endif;
 
@@ -68,7 +78,9 @@ class SubscritionController extends Controller
             $user_data = Wallet::where('user_id',Auth::id())->first();
             if ($user_data->amount < $data->amount)
             {
-                return response()->json(['error' => 'Insufficient amount'], 500);
+                return response()->json([
+                    'error' => $lang === 'ar' ? 'المبلغ غير كافٍ' : 'Insufficient amount'
+                ], 500);
             }
 
             $subscription = new Subscription();
@@ -128,11 +140,11 @@ class SubscritionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         $user_id = Auth::id();
 
-
+        $lang = $request->input('lang', 'en');
 
         if ($id == 'booking'):
             $subscription = Subscription::where('user_id',Auth::id())
@@ -200,8 +212,10 @@ class SubscritionController extends Controller
 
         if (!$subscription) {
 
-            return response()->json(['message' => 'No active subscription found',
-                'data'=>false], 404);
+            return response()->json([
+                'message' => $lang === 'ar' ? 'لم يتم العثور على اشتراك نشط' : 'No active subscription found',
+                'data' => false
+            ], 404);
         }
 
 

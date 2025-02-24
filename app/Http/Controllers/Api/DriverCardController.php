@@ -37,12 +37,32 @@ class DriverCardController extends Controller
      */
     public function store(Request $request)
     {
+
+        $lang = $request->input('lang', 'en'); // Default language is English
+
+        $messages = [
+            'name.required' => $lang === 'ar' ? 'الاسم مطلوب' : 'Name is required',
+            'name.string' => $lang === 'ar' ? 'يجب أن يكون الاسم نصًا' : 'Name must be a string',
+
+            'id_number.required' => $lang === 'ar' ? 'رقم الهوية مطلوب' : 'ID number is required',
+            'id_number.string' => $lang === 'ar' ? 'يجب أن يكون رقم الهوية نصًا' : 'ID number must be a string',
+            'id_number.unique' => $lang === 'ar' ? 'رقم الهوية مستخدم بالفعل' : 'ID number already exists',
+
+            'mobile.required' => $lang === 'ar' ? 'رقم الهاتف مطلوب' : 'Mobile number is required',
+            'mobile.string' => $lang === 'ar' ? 'يجب أن يكون رقم الهاتف نصًا' : 'Mobile number must be a string',
+
+            'image.required' => $lang === 'ar' ? 'الصورة مطلوبة' : 'Image is required',
+            'image.image' => $lang === 'ar' ? 'يجب أن يكون الملف صورة' : 'The file must be an image',
+            'image.mimes' => $lang === 'ar' ? 'يجب أن تكون الصورة بصيغة: jpeg, png, jpg, gif, webp' : 'The image must be a file of type: jpeg, png, jpg, gif, webp',
+            'image.max' => $lang === 'ar' ? 'يجب ألا يزيد حجم الصورة عن 2 ميغابايت' : 'The image must not be greater than 2MB',
+        ];
+
         $validated = $request->validate([
             'name' => 'required|string',
             'id_number' => 'required|string|unique:drivers,id_number',
             'mobile' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
-        ]);
+        ],$messages);
 
         if (DriverCard::where('user_id', Auth::id())->exists())
         {
