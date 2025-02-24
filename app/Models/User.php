@@ -39,7 +39,8 @@ class User extends Authenticatable
         'device_token',
         'is_available',
         'driver_image',
-        'city'
+        'city',
+        'gender',
     ];
 
     // Correct method name
@@ -90,6 +91,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
     public function vehicle()
+    {
+        return $this->hasOne(Vehicle::class, 'user_id');
+    }
+
+    public function vehicles()
     {
         return $this->hasOne(Vehicle::class, 'user_id');
     }

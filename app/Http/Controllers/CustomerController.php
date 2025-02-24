@@ -11,9 +11,25 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customer =  User::where('user_type',2)->get();
+      //  $customer =  User::where('user_type',2)->get();
+
+        $query = User::query();
+
+        // City filter using LIKE query
+        if ($request->has('city') && !empty($request->city)){
+
+            $query->where('city', 'LIKE', '%' . $request->city . '%');
+        }
+
+        // Gender filter
+        if ($request->has('gender') && !empty($request->gender)) {
+            $query->where('gender', $request->gender);
+        }
+
+        $customer = $query->where('user_type',2)->get();
+
         return  view('customers.index',compact('customer'));
     }
 

@@ -138,5 +138,10 @@ return [
     "gender" => "Gender",
     "customer" => "Customer",
     "customer_list" => "Customer List",
+    "male" => "Male",
+    "female" => "Female",
+    "enter_city" => "Enter City",
+    "select_gender" => "Select Gender",
+    "filter" => "Filter",
 
 ];
