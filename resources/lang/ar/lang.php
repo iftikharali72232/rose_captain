@@ -128,6 +128,11 @@ return [
     "gender" => "الجنس",
     "customer" => "العملاء",
     "customer_list" => "قائمة العملاء",
+    "male" => "ذكر",
+    "female" => "أنثى",
+    "enter_city" => "أدخل المدينة",
+    "select_gender" => "اختر الجنس",
+    "filter" => "تصفية",
 
 
 ];
