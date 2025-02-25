@@ -25,6 +25,7 @@ Route::post('/driver/store', [AuthController::class, 'store']);
 Route::post('/driver/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::get('car-types', [CarTypeController::class, 'index']);
 Route::get('/privacy-policy',[\App\Http\Controllers\Api\PrivacyPolicy::class,'show']);
+Route::post('/resendOTP',[\App\Http\Controllers\Api\AuthController::class,'resendOTP']);
 
 Route::post('/customers/login',[\App\Http\Controllers\Api\CustomerController::class,'login']);
 Route::post('/customers/otp-verify/',[\App\Http\Controllers\Api\CustomerController::class,'verifyOtp']);
