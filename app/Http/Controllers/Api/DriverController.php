@@ -35,7 +35,8 @@ class DriverController extends Controller
             ]);
         endif;
         $lang = $request->lang;
-        $user = User::where('mobile', $request->mobile)->first();
+        $user = User::where('mobile', $request->mobile)->where('user_type',1)->first();
+    
         if ($user) {
             return response()->json([
                 'success' => false,
